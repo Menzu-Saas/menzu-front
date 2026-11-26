@@ -41,6 +41,10 @@ async function updateRestaurant(restaurantId: string, patch: TableUpdate<"restau
   const { data, error } = await supabase.from("restaurants").update(patch).eq("id", restaurantId).select("id");
   if (error) {
     if (error.code === "23505") return { ok: false, fieldErrors: { slug: "Este endereço já está em uso." } };
+    // Regras do banco (ex.: assinatura suspensa) já trazem uma explicação para a pessoa; o resto fica genérico.
+    const known = parseMenzuError(error);
+    if (known.code !== "UNKNOWN") return { ok: false, error: known.message };
+    console.error("[settings] falha ao salvar o restaurante", error.code);
     return { ok: false, error: SAVE_FAILED };
   }
   if (!data?.length) return { ok: false, error: "Você não tem permissão para esta ação." };
