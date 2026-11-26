@@ -1,7 +1,7 @@
 "use client";
 
-import { AtSign, Check, CircleAlert, LoaderCircle, Phone, Store } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
+import { AtSign, Check, CircleAlert, LoaderCircle, Phone, Pipette, Store } from "lucide-react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { FormField, Icon, ImagePlaceholder, Input, Textarea } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatPhone } from "@/lib/phone";
@@ -36,6 +36,8 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
   };
   const [form, setForm] = useState(initial);
   const [customColor, setCustomColor] = useState(restaurant.primary_color ?? "");
+  const [rgbOpen, setRgbOpen] = useState(false);
+  const rgbButton = useRef<HTMLButtonElement>(null);
   const [logo, setLogo] = useState(restaurant.logo_url);
   const [banner, setBanner] = useState(restaurant.banner_url);
   const [checked, setChecked] = useState<{ slug: string; available: boolean } | null>(null);
@@ -207,7 +209,14 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
           </FormField>
         </div>
 
-        <fieldset className="flex flex-col gap-3">
+        <fieldset
+          className="flex flex-col gap-3"
+          onKeyDown={(e) => {
+            if (e.key !== "Escape" || !rgbOpen) return;
+            setRgbOpen(false);
+            rgbButton.current?.focus();
+          }}
+        >
           <legend className="mb-2 text-body-sm font-bold text-ink">Cor principal</legend>
           <p className="-mt-1 text-caption text-ink-muted">Usada só como destaque no topo do seu cardápio público.</p>
           <div className="flex flex-wrap items-center gap-2.5">
@@ -251,11 +260,26 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
               );
             })}
             <div className="flex items-center gap-2">
-              <span
-                aria-hidden="true"
-                className="size-9 shrink-0 rounded-full border border-line mz-stripes-off"
+              <button
+                ref={rgbButton}
+                type="button"
+                aria-label="Escolher outra cor (RGB)"
+                title="Escolher outra cor (RGB)"
+                aria-expanded={rgbOpen}
+                aria-controls="profile-rgb"
+                onClick={() => setRgbOpen((open) => !open)}
+                className={cn(
+                  "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 mz-stripes-off transition-transform duration-150 ease-out active:translate-y-px",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+                  rgbOpen ? "border-ink" : "border-surface ring-1 ring-line",
+                )}
                 style={HEX_COLOR.test(customColor) ? { backgroundColor: customColor, backgroundImage: "none" } : undefined}
-              />
+              >
+                {/* Fundo próprio: o ícone continua visível em qualquer cor escolhida. */}
+                <span className="inline-flex size-6 items-center justify-center rounded-full bg-surface text-ink">
+                  <Icon icon={Pipette} size={16} />
+                </span>
+              </button>
               <Input
                 aria-label="Cor personalizada (hexadecimal)"
                 wrapperClassName="w-32"
@@ -273,13 +297,17 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
               />
             </div>
           </div>
-          <RgbPicker
-            value={HEX_COLOR.test(customColor) ? customColor : (form.primary_color ?? "")}
-            onChange={(hex) => {
-              setCustomColor(hex);
-              set("primary_color", hex);
-            }}
-          />
+          <div id="profile-rgb" hidden={!rgbOpen}>
+            {rgbOpen && (
+              <RgbPicker
+                value={HEX_COLOR.test(customColor) ? customColor : (form.primary_color ?? "")}
+                onChange={(hex) => {
+                  setCustomColor(hex);
+                  set("primary_color", hex);
+                }}
+              />
+            )}
+          </div>
           {errors.primary_color && (
             <p role="alert" className="text-caption font-semibold text-danger">
               {errors.primary_color}
