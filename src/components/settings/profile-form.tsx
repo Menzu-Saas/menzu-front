@@ -220,7 +220,7 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
           }}
         >
           <legend className="mb-2 text-body-sm font-bold text-ink">Cor principal</legend>
-          <p className="-mt-1 text-caption text-ink-muted">Usada só como destaque no topo do seu cardápio público.</p>
+          <p className="-mt-1 text-caption text-ink-muted">Aplicada nos botões, ícones e destaques das páginas que o cliente vê. Cores muito claras são escurecidas para o texto continuar legível.</p>
           <div className="flex flex-wrap items-center gap-2.5">
             <button
               type="button"

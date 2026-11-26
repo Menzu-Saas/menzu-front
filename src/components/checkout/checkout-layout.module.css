@@ -6,7 +6,7 @@
 .panelTitle { font-size: 19px; line-height: 1.45; font-weight: 700; letter-spacing: -.025em; }
 .paymentAction { min-width: 0; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,46%); align-items: center; gap: 10px; }
 .paymentTotal { font-size: 26px; font-weight: 800; line-height: 1.15; letter-spacing: -.05em; }
-.paymentButton { width: 100%; min-width: 0; height: auto; min-height: 44px; font-size: 14px; white-space: normal; overflow-wrap: anywhere; padding: 8px 12px; background: #e2540a; }
+.paymentButton { width: 100%; min-width: 0; height: auto; min-height: 44px; font-size: 14px; white-space: normal; overflow-wrap: anywhere; padding: 8px 12px; background: var(--mz-brand); }
 @media (min-width: 1024px) { .header { min-height: 62px; } .paymentAction { grid-template-columns: minmax(0,1fr); } }
 @media (max-width: 767px) { .header { min-height: 56px; } .panel { border-radius: 22px; padding: 18px; } }
 
