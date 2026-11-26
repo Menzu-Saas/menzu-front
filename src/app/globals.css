@@ -297,3 +297,7 @@
     background-image: linear-gradient(140deg, var(--mz-brand-hero-from), var(--mz-brand));
   }
 }
+
+/* Botão de arrasto dos controles R, G e B (a faixa de cada um é pintada no componente). */
+.mz-rgb-range::-webkit-slider-thumb { appearance: none; width: 20px; height: 20px; border-radius: 999px; border: 3px solid var(--color-surface); background: var(--color-ink); box-shadow: 0 0 0 1px var(--color-line-strong); }
+.mz-rgb-range::-moz-range-thumb { width: 14px; height: 14px; border-radius: 999px; border: 3px solid var(--color-surface); background: var(--color-ink); box-shadow: 0 0 0 1px var(--color-line-strong); }

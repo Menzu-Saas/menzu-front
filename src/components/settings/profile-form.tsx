@@ -9,6 +9,7 @@ import { BRAND_SWATCHES, HEX_COLOR, SLUG_PATTERN } from "@/lib/schemas/settings"
 import { checkSlugAction, updateProfileAction } from "@/server/actions/settings";
 import type { RestaurantSettings } from "@/server/queries/settings";
 import { ImageField } from "./image-field";
+import { RgbPicker } from "./rgb-picker";
 import { maskPhone, SaveButton, SettingsSection, useSave } from "./shared";
 import { useRestaurantId } from "@/components/admin/current-restaurant";
 
@@ -180,7 +181,10 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
             <button
               type="button"
               aria-pressed={form.primary_color === null}
-              onClick={() => set("primary_color", null)}
+              onClick={() => {
+                set("primary_color", null);
+                setCustomColor("");
+              }}
               className={cn(
                 "inline-flex h-9 items-center rounded-md border px-3 text-caption font-bold transition-colors duration-150 ease-out",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
@@ -236,6 +240,13 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
               />
             </div>
           </div>
+          <RgbPicker
+            value={HEX_COLOR.test(customColor) ? customColor : (form.primary_color ?? "")}
+            onChange={(hex) => {
+              setCustomColor(hex);
+              set("primary_color", hex);
+            }}
+          />
           {errors.primary_color && (
             <p role="alert" className="text-caption font-semibold text-danger">
               {errors.primary_color}
