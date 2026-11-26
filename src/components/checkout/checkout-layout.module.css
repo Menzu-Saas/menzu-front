@@ -1,0 +1,64 @@
+.page { min-height: 100dvh; background: #f5f5f7; }
+.header { min-height: 62px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; }
+.heading { margin-top: 5px; font-size: clamp(24px, 3vw, 36px); font-weight: 700; line-height: 1.12; letter-spacing: -.045em; }
+.kicker { color: #8d3b12; font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.panel { border: 1px solid #ede5de; border-radius: 24px; padding: 22px; background: #fff; }
+.panelTitle { font-size: 19px; line-height: 1.45; font-weight: 700; letter-spacing: -.025em; }
+.paymentAction { min-width: 0; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,46%); align-items: center; gap: 10px; }
+.paymentTotal { font-size: 26px; font-weight: 800; line-height: 1.15; letter-spacing: -.05em; }
+.paymentButton { width: 100%; min-width: 0; height: auto; min-height: 44px; font-size: 14px; white-space: normal; overflow-wrap: anywhere; padding: 8px 12px; background: #e2540a; }
+@media (min-width: 1024px) { .header { min-height: 62px; } .paymentAction { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 767px) { .header { min-height: 56px; } .panel { border-radius: 22px; padding: 18px; } }
+
+.shell { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: 24px; }
+.intro { padding-top: 24px; }
+.grid { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(0,1fr); align-items: start; gap: 24px; padding: 16px 0 32px; }
+@media (max-width: 1023px) { .shell { max-width: 720px; } .grid { grid-template-columns: minmax(0,1fr); gap: 16px; } }
+@media (max-width: 767px) { .shell { padding-inline: 16px; } .intro { padding-top: 18px; } }
+
+.pendingLabel { font-size: 11px; }
+.pendingTotal { font-size: 14px; font-weight: 700; line-height: 1.25; }
+
+.paymentButton.addressButton { width: fit-content; max-width: 100%; justify-self: end; font-size: 13px; padding: 5px 12px; }
+
+@media (min-width: 768px) {
+  .checkoutDialog { width: min(550px, calc(100% - 32px)); max-width: 550px; border-radius: 24px; }
+  .checkoutDialog > :first-child { align-items: center; border-bottom: 1px solid var(--mz-line, #ececef); padding-block: 16px; }
+}
+.paymentTabs { gap: 0; padding: 0; border-radius: 0; border-bottom: 1px solid var(--mz-line, #ececef); background: transparent; }
+.paymentTabs button { min-height: 44px; border-radius: 0; border-bottom: 2px solid transparent; background: transparent; box-shadow: none; }
+.paymentTabs button[aria-checked="true"] { border-bottom-color: currentColor; font-weight: 800; }
+.paymentRow[data-selected], .paymentRow { gap: 12px; min-height: 56px; border: 0; background: transparent; padding: 8px 16px; }
+.paymentRow > :first-child { order: 1; }
+.paymentRow:hover:not(:disabled) { background: #f5f5f7; }
+.paymentIcon { display: grid; width: 38px; height: 38px; flex: none; place-items: center; border-radius: 11px; background: #fff2e8; color: #9e3908; }
+
+.paymentButton:not(.addressButton) { min-height: 54px; border-radius: 16px; font-size: 16px; }
+.fulfillmentChoice { background: #ededf0; }
+.fulfillmentChoice button { min-height: 44px; }
+
+.summaryAction { display: none; }
+.mobileAction {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  border-top: 1px solid var(--mz-line, #ececef);
+  background: #fff;
+  padding: 8px 16px max(8px, env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+  .summary { position: sticky; top: 80px; }
+  .summaryAction { display: block; border-top: 1px solid var(--mz-line, #ececef); padding-top: 12px; }
+  .mobileAction { display: none; }
+}
+
+.progress { width: min(100% - 32px, 520px); margin-inline: auto; padding-block: 32px; }
+.progressRows { display: grid; gap: 16px; margin-block: 24px; }
+.progressRows li { display: flex; justify-content: space-between; gap: 16px; }
+.progressRows strong { text-align: end; overflow-wrap: anywhere; }
+.progressRows li.confirmed { color: #138459; transition: color 180ms ease; }
+.progressStatus { display: flex; align-items: center; gap: 10px; width: fit-content; padding: 12px 16px; border-radius: 16px; background: #202024; color: white; }
+.skeleton { display: grid; gap: 12px; padding: 22px; border-radius: 24px; background: white; }
+.skeleton > div { height: 14px; width: 38%; border-radius: 8px; background: #ededf0; }
+.skeleton > div:nth-child(2) { height: 84px; width: 100%; border-radius: 12px; }

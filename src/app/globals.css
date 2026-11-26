@@ -1,0 +1,299 @@
+@import "tailwindcss";
+@source "../";
+@import "../styles/tokens.css";
+
+@theme inline {
+  /* Drop every default Tailwind colour/shadow/radius: only Menzu tokens exist. */
+  --color-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --radius-*: initial;
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-white: var(--mz-surface);
+
+  --color-canvas: var(--mz-canvas);
+  --color-surface: var(--mz-surface);
+  --color-surface-subtle: var(--mz-surface-subtle);
+  --color-surface-muted: var(--mz-surface-muted);
+  --color-surface-sunken: var(--mz-surface-sunken);
+  --color-inverse: var(--mz-surface-inverse);
+  --color-inverse-hover: var(--mz-inverse-hover);
+  --color-overlay: var(--mz-overlay);
+
+  --color-line: var(--mz-border);
+  --color-frame: var(--mz-border-frame);
+  --color-line-strong: var(--mz-border-strong);
+  --color-control: var(--mz-border-control);
+  --color-track-off: var(--mz-track-off);
+
+  --color-ink: var(--mz-text);
+  --color-ink-secondary: var(--mz-text-secondary);
+  --color-ink-muted: var(--mz-text-muted);
+  --color-ink-subtle: var(--mz-text-subtle);
+  --color-ink-faint: var(--mz-text-faint);
+  --color-ink-disabled: var(--mz-text-disabled);
+  --color-ink-ghost: var(--mz-text-ghost);
+  --color-on-inverse: var(--mz-text-on-inverse);
+  --color-on-brand: var(--mz-text-on-brand);
+
+  --color-brand: var(--mz-brand);
+  --color-accent: var(--mz-accent);
+  --color-brand-soft: var(--mz-brand-soft);
+  --color-brand-soft-border: var(--mz-brand-soft-border);
+  --color-brand-tint: var(--mz-brand-tint);
+  /* Restaurant's own accent (public menu header); falls back to Menzu brand. */
+  --color-restaurant: var(--mz-restaurant-accent, var(--mz-brand));
+  --color-brand-tint-border: var(--mz-brand-tint-border);
+  --color-brand-dashed: var(--mz-brand-dashed);
+  --color-brand-badge: var(--mz-brand-badge);
+
+  --color-success: var(--mz-success);
+  --color-success-soft: var(--mz-success-soft);
+  --color-success-tint: var(--mz-success-tint);
+  --color-success-border: var(--mz-success-border);
+  --color-warning: var(--mz-warning);
+  --color-warning-soft: var(--mz-warning-soft);
+  --color-neutral-badge: var(--mz-neutral-badge);
+  --color-danger: var(--mz-danger);
+  --color-danger-soft: var(--mz-danger-soft);
+
+  --color-stripe-food-ink: var(--mz-stripe-food-ink);
+  --color-stripe-cover-ink: var(--mz-stripe-cover-ink);
+  --color-stripe-map-ink: var(--mz-stripe-map-ink);
+  --color-stripe-off-ink: var(--mz-stripe-off-ink);
+
+  --color-print-ink: var(--mz-print-ink);
+  --color-print-paper: var(--mz-print-paper);
+
+  --color-chart-1: var(--mz-chart-1);
+  --color-chart-2: var(--mz-chart-2);
+  --color-chart-3: var(--mz-chart-3);
+  --color-chart-4: var(--mz-chart-4);
+  --color-chart-5: var(--mz-chart-5);
+  --color-chart-6: var(--mz-chart-6);
+
+  --radius-xs: var(--mz-radius-xs);
+  --radius-sm: var(--mz-radius-sm);
+  --radius-md: var(--mz-radius-md);
+  --radius-lg: var(--mz-radius-lg);
+  --radius-xl: var(--mz-radius-xl);
+  --radius-2xl: var(--mz-radius-2xl);
+  --radius-3xl: var(--mz-radius-3xl);
+  --radius-4xl: var(--mz-radius-4xl);
+  --radius-5xl: var(--mz-radius-5xl);
+  --radius-6xl: var(--mz-radius-6xl);
+  --radius-phone: var(--mz-radius-phone);
+  --radius-full: var(--mz-radius-pill);
+  --radius-bar: var(--mz-radius-bar);
+  --radius-btn-lg: var(--mz-radius-btn-lg);
+
+  --shadow-frame: var(--mz-shadow-frame);
+  --shadow-card: var(--mz-shadow-card);
+  --shadow-raised: var(--mz-shadow-raised);
+  --shadow-raised-lg: var(--mz-shadow-raised-lg);
+  --shadow-segment: var(--mz-shadow-segment);
+  --shadow-cta: var(--mz-shadow-cta);
+  --shadow-cta-success: var(--mz-shadow-cta-success);
+
+  --tracking-label: var(--mz-tracking-label);
+  --tracking-eyebrow: var(--mz-tracking-eyebrow);
+  --tracking-brand: var(--mz-tracking-brand);
+
+  /* Type scale: size + line-height + tracking + weight bundled per utility.
+     Default Tailwind sizes (text-xs … text-9xl) are dropped: only Menzu type tokens exist. */
+  --text-*: initial;
+  --text-display: 36px;
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 800;
+  --text-brand-title: 26px;
+  --text-brand-title--line-height: 1.15;
+  --text-brand-title--letter-spacing: -0.02em;
+  --text-brand-title--font-weight: 800;
+  --text-metric: 25px;
+  --text-metric--line-height: 1.1;
+  --text-metric--font-weight: 800;
+  --text-title-xl: 22px;
+  --text-title-xl--line-height: 1.2;
+  --text-title-xl--letter-spacing: -0.02em;
+  --text-title-xl--font-weight: 800;
+  --text-title-lg: 21px;
+  --text-title-lg--line-height: 1.15;
+  --text-title-lg--letter-spacing: -0.02em;
+  --text-title-lg--font-weight: 800;
+  --text-title-md: 20px;
+  --text-title-md--line-height: 1.2;
+  --text-title-md--letter-spacing: -0.02em;
+  --text-title-md--font-weight: 800;
+  --text-title-sm: 19px;
+  --text-title-sm--line-height: 1.25;
+  --text-title-sm--letter-spacing: -0.02em;
+  --text-title-sm--font-weight: 800;
+  --text-heading: 18px;
+  --text-heading--line-height: 1.3;
+  --text-heading--font-weight: 800;
+  --text-subheading: 16px;
+  --text-subheading--line-height: 1.3;
+  --text-subheading--font-weight: 800;
+  --text-item: 15px;
+  --text-item--line-height: 1.35;
+  --text-item--font-weight: 700;
+  --text-body: 14px;
+  --text-body--line-height: 1.4;
+  --text-body--font-weight: 600;
+  --text-body-sm: 13px;
+  --text-body-sm--line-height: 1.4;
+  --text-body-sm--font-weight: 600;
+  --text-caption: 12px;
+  --text-caption--line-height: 1.45;
+  --text-caption--font-weight: 400;
+  --text-micro: 11px;
+  --text-micro--line-height: 1.3;
+  --text-micro--font-weight: 700;
+  --text-eyebrow: 12px;
+  --text-eyebrow--line-height: 1.3;
+  --text-eyebrow--letter-spacing: 0.06em;
+  --text-eyebrow--font-weight: 700;
+  /* DM Mono label inside image placeholders (reference: 9-10px). */
+  --text-placeholder: 10px;
+  --text-placeholder--line-height: 1.2;
+  --text-placeholder--letter-spacing: 0.04em;
+  --text-placeholder--font-weight: 500;
+
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
+
+  /* Overlay motion (150–220ms ease-out; disabled under prefers-reduced-motion via motion-safe:). */
+  --animate-overlay-in: mz-fade-in 180ms ease-out;
+  --animate-overlay-out: mz-fade-out 150ms ease-in;
+  --animate-modal-in: mz-modal-in 200ms ease-out;
+  --animate-modal-out: mz-modal-out 150ms ease-in;
+  --animate-drawer-in-right: mz-drawer-in-right 220ms ease-out;
+  --animate-drawer-out-right: mz-drawer-out-right 180ms ease-in;
+  --animate-drawer-in-left: mz-drawer-in-left 220ms ease-out;
+  --animate-drawer-out-left: mz-drawer-out-left 180ms ease-in;
+  --animate-pop-in: mz-pop-in 150ms ease-out;
+
+  @keyframes mz-fade-in { from { opacity: 0; } }
+  @keyframes mz-fade-out { to { opacity: 0; } }
+  @keyframes mz-modal-in { from { opacity: 0; transform: translateY(8px) scale(0.98); } }
+  @keyframes mz-modal-out { to { opacity: 0; transform: translateY(8px) scale(0.98); } }
+  @keyframes mz-drawer-in-right { from { transform: translateX(100%); } }
+  @keyframes mz-drawer-out-right { to { transform: translateX(100%); } }
+  @keyframes mz-drawer-in-left { from { transform: translateX(-100%); } }
+  @keyframes mz-drawer-out-left { to { transform: translateX(-100%); } }
+  @keyframes mz-pop-in { from { opacity: 0; transform: scale(0.97); } }
+
+  --breakpoint-2xl: 1440px;
+  --container-container: 1240px;
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--mz-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--mz-canvas);
+    color: var(--mz-text);
+    font-family: var(--font-sans);
+  }
+
+  a {
+    transition: color var(--mz-transition);
+  }
+  a:hover {
+    color: var(--mz-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--mz-accent);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled):active,
+  [role="button"]:not([aria-disabled="true"]):active {
+    transform: translateY(1px);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--mz-border-strong) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--mz-border-strong);
+    border-radius: var(--mz-radius-pill);
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* Selected/highlighted card border width (design-system §5). */
+@utility border-selected {
+  border-style: solid;
+  border-width: var(--mz-border-selected);
+}
+
+/* Selected option without layout shift (design-system §10): a 1px accent border plus the extra
+   0.5px drawn inside as an inset ring, so the content never moves when the option toggles. */
+@utility border-selected-accent {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--mz-accent);
+  box-shadow: inset 0 0 0 calc(var(--mz-border-selected) - 1px) var(--mz-accent);
+}
+
+/* Highlighted ("new") card, same technique in the brand tint: rows and cards keep their size when
+   the highlight ends (no 0.5px shift). */
+@utility border-selected-tint {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--mz-brand-tint-border);
+  box-shadow: inset 0 0 0 calc(var(--mz-border-selected) - 1px) var(--mz-brand-tint-border);
+}
+
+@layer components {
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .mz-stripes-food {
+    background-image: repeating-linear-gradient(135deg, var(--mz-stripe-food-a) 0 8px, var(--mz-stripe-food-b) 8px 16px);
+  }
+  .mz-stripes-cover {
+    background-image: repeating-linear-gradient(135deg, var(--mz-stripe-cover-a) 0 10px, var(--mz-stripe-cover-b) 10px 20px);
+  }
+  .mz-stripes-map {
+    background-image: repeating-linear-gradient(135deg, var(--mz-stripe-map-a) 0 12px, var(--mz-stripe-map-b) 12px 24px);
+  }
+  .mz-stripes-off {
+    background-image: repeating-linear-gradient(135deg, var(--mz-stripe-off-a) 0 8px, var(--mz-stripe-off-b) 8px 16px);
+  }
+  .mz-gradient-logo {
+    background-image: linear-gradient(150deg, var(--mz-brand-gradient-from), var(--mz-brand));
+  }
+  .mz-gradient-hero {
+    background-image: linear-gradient(140deg, var(--mz-brand-hero-from), var(--mz-brand));
+  }
+}

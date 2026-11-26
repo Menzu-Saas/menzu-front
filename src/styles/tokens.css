@@ -1,0 +1,122 @@
+/* Menzu design tokens. Source: docs/design-system.md sections 1-6, 9, 10. */
+:root {
+  /* 1.1 Canvas and surfaces */
+  --mz-canvas: #F2EDE8;
+  --mz-surface: #FFFFFF;
+  --mz-surface-subtle: #FCFAF9;
+  --mz-surface-muted: #F7F3F0;
+  --mz-surface-sunken: #F9F6F4;
+  --mz-surface-inverse: #1A1614;
+  --mz-inverse-hover: #2B2521;
+  /* Scrim behind modal/drawer/bottom sheet: ink at 45% (derived; reference shows no overlays). */
+  --mz-overlay: rgba(26,22,20,0.45);
+
+  /* 1.2 Borders */
+  --mz-border: #ECE5DF;
+  --mz-border-frame: #E6DED7;
+  --mz-border-strong: #D8D0C9;
+  --mz-border-control: #C9C0B8;
+  --mz-track-off: #E0D8D1;
+
+  /* 1.3 Text */
+  --mz-text: #1A1614;
+  --mz-text-secondary: #5C544D;
+  --mz-text-muted: #7C736B;
+  --mz-text-subtle: #8A827B;
+  --mz-text-faint: #9A918A;
+  --mz-text-disabled: #A79D95;
+  --mz-text-ghost: #C9C0B8;
+  --mz-text-on-inverse: #D8D0C9;
+  --mz-text-on-brand: #FFE7D6;
+
+  /* 1.4 Brand */
+  --mz-brand: #E2540A;
+  --mz-accent: #FF6B1A;
+  --mz-brand-gradient-from: #FF8A3D;
+  --mz-brand-hero-from: #FF7A29;
+  --mz-brand-soft: #FFF1E7;
+  --mz-brand-soft-border: #FCE0CD;
+  --mz-brand-tint: #FFF8F3;
+  --mz-brand-tint-border: #FFC79E;
+  --mz-brand-dashed: #FCC49B;
+  --mz-brand-badge: #FFE9DA;
+
+  /* Chart ramp, low to high */
+  --mz-chart-1: #FFE9DA;
+  --mz-chart-2: #FFE0CB;
+  --mz-chart-3: #FFD3B3;
+  --mz-chart-4: #FFC79E;
+  --mz-chart-5: #FFA86B;
+  --mz-chart-6: #FF6B1A;
+
+  /* 1.5 Status */
+  --mz-success: #12A150;
+  --mz-success-soft: #E7F7EE;
+  --mz-success-tint: #F4FBF7;
+  --mz-success-border: #BFE8CF;
+  --mz-warning: #B26A00;
+  --mz-warning-soft: #FFF3DC;
+  --mz-neutral-badge: #F1EDE9;
+  --mz-danger: #C2410C;
+  --mz-danger-soft: #FDEBE3;
+
+  /* 1.6 Image placeholders (stripe pairs + label ink) */
+  --mz-stripe-food-a: #F6E0CE;
+  --mz-stripe-food-b: #FBEFE4;
+  --mz-stripe-food-ink: #B08466;
+  --mz-stripe-cover-a: #F0D3BC;
+  --mz-stripe-cover-b: #F8E7D8;
+  --mz-stripe-cover-ink: #A87C58;
+  --mz-stripe-map-a: #E4EAE6;
+  --mz-stripe-map-b: #EFF3F0;
+  --mz-stripe-map-ink: #7B8B82;
+  --mz-stripe-off-a: #EDE7E2;
+  --mz-stripe-off-b: #F6F2EF;
+  --mz-stripe-off-ink: var(--mz-text-subtle);
+
+  /* 4 Radius */
+  --mz-radius-xs: 6px;
+  --mz-radius-sm: 9px;
+  --mz-radius-md: 11px;
+  --mz-radius-lg: 13px;
+  --mz-radius-xl: 14px;
+  --mz-radius-2xl: 16px;
+  --mz-radius-3xl: 18px;
+  --mz-radius-4xl: 20px;
+  --mz-radius-5xl: 22px;
+  --mz-radius-6xl: 24px;
+  /* Phone frame (reference mobile screens 01–09). */
+  --mz-radius-phone: 38px;
+  /* Large button (desktop CTA, design-system §8: r15). */
+  --mz-radius-btn-lg: 15px;
+  --mz-radius-pill: 999px;
+  /* Chart bar: rounded top, tight bottom (reference "Vendas por hora"). */
+  --mz-radius-bar: 8px 8px 3px 3px;
+
+  /* 6 Shadows (warm brown, never grey) */
+  --mz-shadow-frame: 0 26px 50px -26px rgba(70,45,20,0.3);
+  --mz-shadow-card: 0 26px 50px -30px rgba(70,45,20,0.3);
+  --mz-shadow-raised: 0 8px 20px -10px rgba(70,45,20,0.35);
+  --mz-shadow-raised-lg: 0 10px 24px -12px rgba(70,45,20,0.35);
+  --mz-shadow-segment: 0 2px 6px -2px rgba(70,45,20,0.2);
+  --mz-shadow-cta: 0 10px 22px -12px rgba(226,84,10,0.9);
+  --mz-shadow-cta-success: 0 10px 22px -12px rgba(18,161,80,0.9);
+
+  /* Selected option border (design-system §5): 1.5px accent. */
+  --mz-border-selected: 1.5px;
+
+  /* Letter spacing outside the type scale: uppercase badges/steps and the brand wordmark. */
+  --mz-tracking-label: 0.08em;
+  --mz-tracking-eyebrow: 0.06em;
+  --mz-tracking-brand: -0.02em;
+
+  /* 9 Layout */
+  --mz-container: 1240px;
+
+  /* Print (thermal receipt): pure black on white only, never brand colours. */
+  --mz-print-ink: #000000;
+  --mz-print-paper: #FFFFFF;
+
+  /* 10 Motion */
+  --mz-transition: 150ms ease-out;
+}
