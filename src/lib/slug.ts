@@ -9,3 +9,14 @@ export function slugify(name: string): string {
     .slice(0, 50)
     .replace(/-+$/g, "");
 }
+
+/** Endereços possíveis para um nome, em ordem de preferência: "x", "x-2", "x-3"… Vazio se o nome for curto. */
+export function slugCandidates(name: string, count = 20): string[] {
+  const base = slugify(name);
+  if (base.length < 3) return [];
+  return Array.from({ length: count }, (_, index) => {
+    if (index === 0) return base;
+    const suffix = `-${index + 1}`;
+    return base.slice(0, 50 - suffix.length).replace(/-+$/g, "") + suffix;
+  });
+}

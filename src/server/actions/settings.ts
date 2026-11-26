@@ -1,5 +1,6 @@
 "use server";
 
+import { slugCandidates } from "@/lib/slug";
 import { revalidatePath } from "next/cache";
 import { BETA_UNAVAILABLE } from "@/lib/beta-unavailable";
 import { cookies } from "next/headers";
@@ -58,6 +59,19 @@ export async function checkSlugAction(rid: string, slug: string): Promise<{ vali
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.rpc("is_slug_available", { p_slug: value, p_restaurant_id: restaurantId });
   return { valid: true, available: data === true };
+}
+
+/** Endereço livre que acompanha o nome ("x", "x-2"…), ou null se o nome não gerar um. */
+export async function suggestSlugAction(rid: string, name: string): Promise<string | null> {
+  const member = await requireMemberOf(rid, MANAGEMENT_ROLES);
+  if (!member.ok) return null;
+  const supabase = await createSupabaseServerClient();
+  for (const slug of slugCandidates(String(name ?? "").slice(0, 120))) {
+    const { data, error } = await supabase.rpc("is_slug_available", { p_slug: slug, p_restaurant_id: member.restaurantId });
+    if (error) return null;
+    if (data === true) return slug;
+  }
+  return null;
 }
 
 /** Perfil da loja: name, description, contacts, slug and accent colour. */

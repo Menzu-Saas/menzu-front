@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, Bike, Clock3, MapPin, MessageCircle } from "lucide-react";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { redirectOldSlug } from "@/server/queries/old-slug";
 import { getOrderReviewState, getPublicOrder } from "@/server/queries/public-menu";
 import { formatMoney } from "@/lib/money";
 import { isUuid } from "@/lib/uuid";
@@ -19,7 +20,8 @@ export default async function Confirmation({params,searchParams}:{params:Promise
  if(!isUuid(id))notFound();
  const token=(await cookies()).get(`menzu_receipt_${id}`)?.value;
  const order=token?await getPublicOrder(id,token):null;
- if(!order||order.restaurant.slug!==slug)notFound();
+ if(!order)notFound();
+ if(order.restaurant.slug!==slug)return redirectOldSlug(slug,"/confirmacao",{id});
  const reviewState = token && (order.status === "DELIVERED" || (order.type === "DELIVERY" && order.status === "OUT_FOR_DELIVERY"))
    ? await getOrderReviewState(id, token) : "unavailable";
  const receivedByCustomer = order.type === "DELIVERY" && (reviewState === "ready" || reviewState === "reviewed");

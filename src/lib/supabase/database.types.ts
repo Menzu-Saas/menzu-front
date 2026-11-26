@@ -3342,6 +3342,7 @@ export type Database = {
       }
       create_order: { Args: { p_payload: Json }; Returns: Json }
       create_restaurant: { Args: { p: Json }; Returns: string }
+      resolve_old_slug: { Args: { p_slug: string }; Returns: string }
       dashboard_metrics: {
         Args: { p_from: string; p_restaurant_id: string; p_to: string }
         Returns: Json

@@ -6,7 +6,8 @@ import { FormField, Icon, ImagePlaceholder, Input, Textarea } from "@/components
 import { cn } from "@/lib/cn";
 import { formatPhone } from "@/lib/phone";
 import { BRAND_SWATCHES, HEX_COLOR, SLUG_PATTERN } from "@/lib/schemas/settings";
-import { checkSlugAction, updateProfileAction } from "@/server/actions/settings";
+import { slugify } from "@/lib/slug";
+import { checkSlugAction, suggestSlugAction, updateProfileAction } from "@/server/actions/settings";
 import type { RestaurantSettings } from "@/server/queries/settings";
 import { ImageField } from "./image-field";
 import { RgbPicker } from "./rgb-picker";
@@ -69,6 +70,35 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
     };
   }, [form.slug, restaurant.slug, rid]);
 
+  // O endereço acompanha o nome: se já estiver em uso por outro restaurante, ganha um número.
+  const [followName, setFollowName] = useState<string | null>(null);
+  useEffect(() => {
+    if (followName === null) return;
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      suggestSlugAction(rid, followName).then(
+        (slug) => {
+          if (!cancelled && slug) setForm((f) => (f.name === followName ? { ...f, slug } : f));
+        },
+        // Sem conexão: fica o endereço do nome; o servidor confere de novo ao salvar.
+        () => {},
+      );
+    }, 400);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [followName, rid]);
+
+  function setName(name: string) {
+    const unchanged = name.trim() === restaurant.name.trim();
+    const next = slugify(name);
+    setForm((f) => ({ ...f, name, slug: unchanged ? restaurant.slug : next.length >= 3 ? next : f.slug }));
+    setFollowName(unchanged ? null : name);
+    clear("name");
+    clear("slug");
+  }
+
   function set<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm((f) => ({ ...f, [key]: value }));
     clear(key);
@@ -86,7 +116,7 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
       </span>
     ) : slugState === "available" ? (
       <span className="inline-flex items-center gap-1.5 font-semibold text-success">
-        <Icon icon={Check} size={16} /> Disponível · links e QR Codes antigos deixarão de funcionar
+        <Icon icon={Check} size={16} /> Disponível · links e QR Codes antigos continuam funcionando
       </span>
     ) : slugState === "taken" ? (
       <span className="inline-flex items-center gap-1.5 font-semibold text-danger">
@@ -139,7 +169,7 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
       <form noValidate onSubmit={submit} className="flex flex-col gap-4.5 border-t border-line pt-5">
         <div className="grid gap-4.5 md:grid-cols-2">
           <FormField label="Nome do restaurante" htmlFor="profile-name" error={errors.name} required>
-            <Input leftIcon={Store} value={form.name} onChange={(e) => set("name", e.target.value)} />
+            <Input leftIcon={Store} value={form.name} onChange={(e) => setName(e.target.value)} />
           </FormField>
           <FormField label="Endereço do cardápio" htmlFor="profile-slug" error={errors.slug} hint={slugHint} required>
             <Input
@@ -149,7 +179,10 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
               className="font-mono"
               invalid={slugState === "taken" || slugState === "invalid" ? true : undefined}
               value={form.slug}
-              onChange={(e) => set("slug", e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 50))}
+              onChange={(e) => {
+                setFollowName(null);
+                set("slug", e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 50));
+              }}
             />
           </FormField>
         </div>

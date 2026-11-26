@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { redirectOldSlug } from "@/server/queries/old-slug";
 import { CartView } from "@/components/cart/cart-view";
 import { restaurantOpenState } from "@/lib/opening-hours";
 import { getPublicMenu } from "@/server/queries/public-menu";
@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CartPage({ params }: Props) {
   const { slug } = await params;
   const data = await getPublicMenu(slug);
-  if (!data) notFound();
+  if (!data) return redirectOldSlug(slug, "/carrinho");
   const r = data.restaurant;
   return <CartView data={data} openState={restaurantOpenState(r, r.hours, r.timezone, new Date())} />;
 }

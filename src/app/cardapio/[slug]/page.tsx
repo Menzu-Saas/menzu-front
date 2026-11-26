@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { redirectOldSlug } from "@/server/queries/old-slug";
 import { MenuView } from "@/components/menu/menu-view";
 import { isPreviewRestaurant, previewDishes, PREVIEW_ID } from "@/lib/restaurant-preview";
 import { restaurantOpenState } from "@/lib/opening-hours";
@@ -24,7 +24,7 @@ export default async function MenuPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const sp = await searchParams;
   const data = await getPublicMenu(slug);
-  if (!data) notFound();
+  if (!data) return redirectOldSlug(slug, "", sp);
   const r = data.restaurant;
 
   const rawTable = Array.isArray(sp.table) ? sp.table[0] : sp.table;
