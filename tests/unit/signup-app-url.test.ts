@@ -39,9 +39,9 @@ describe("cadastro e o endereço público do site", () => {
     expect(publicAppUrl({ APP_URL: "https://menzu.com.br", VERCEL: "1", VERCEL_PROJECT_PRODUCTION_URL: "x.vercel.app" })).toBe("https://menzu.com.br");
   });
 
-  it("nunca usa o endereço pedido pelo visitante: sem nenhuma fonte confiável, recusa antes de criar a conta", async () => {
-    await expect(signUpAction(form())).rejects.toThrow(/APP_URL is not configured/);
-    expect(signUp).not.toHaveBeenCalled();
+  it("em produção sem nenhuma variável, usa o endereço fixo do site e nunca o pedido pelo visitante", async () => {
+    await expect(signUpAction(form())).resolves.toMatchObject({ ok: true, status: "check_email" });
+    expect(signUp.mock.calls[0]![0].options.emailRedirectTo).toContain("https://menzu-front.vercel.app/auth/callback?next=");
   });
 
   it("fora da Vercel, ignora a variável da plataforma", () => {

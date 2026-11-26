@@ -11,15 +11,20 @@ export interface AppOriginInput {
   header: (name: string) => string | null;
 }
 
+/** Endereço do site publicado. Se o domínio mudar, atualize aqui ou configure APP_URL. */
+export const DEFAULT_PRODUCTION_URL = "https://menzu-front.vercel.app";
+
 /**
- * Endereço público configurado: APP_URL; na Vercel, se ela faltar, o domínio de produção que a própria
- * plataforma informa (VERCEL_PROJECT_PRODUCTION_URL). Nenhum dos dois vem do pedido do visitante.
+ * Endereço público, nesta ordem: APP_URL; na Vercel, o domínio de produção que a plataforma informa
+ * (VERCEL_PROJECT_PRODUCTION_URL); em produção, o endereço fixo acima. Fora de produção, undefined.
+ * Nenhuma das fontes vem do pedido do visitante.
  */
 export function publicAppUrl(env: Record<string, string | undefined> = process.env): string | undefined {
   const configured = env.APP_URL?.trim();
   if (configured) return configured;
   const host = env.VERCEL === "1" ? env.VERCEL_PROJECT_PRODUCTION_URL?.trim() : "";
-  return host ? `https://${host}` : undefined;
+  if (host) return `https://${host}`;
+  return env.NODE_ENV === "production" ? DEFAULT_PRODUCTION_URL : undefined;
 }
 
 export class AppUrlNotConfiguredError extends Error {
