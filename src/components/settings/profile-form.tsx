@@ -1,16 +1,16 @@
 "use client";
 
-import { AtSign, Check, CircleAlert, LoaderCircle, Phone, Pipette, Store } from "lucide-react";
+import { AtSign, Check, CircleAlert, LoaderCircle, Phone, Plus, Store } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { FormField, Icon, ImagePlaceholder, Input, Textarea } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatPhone } from "@/lib/phone";
-import { BRAND_SWATCHES, HEX_COLOR, SLUG_PATTERN } from "@/lib/schemas/settings";
+import { BRAND_SWATCHES, SLUG_PATTERN } from "@/lib/schemas/settings";
 import { slugify } from "@/lib/slug";
 import { checkSlugAction, suggestSlugAction, updateProfileAction } from "@/server/actions/settings";
 import type { RestaurantSettings } from "@/server/queries/settings";
 import { ImageField } from "./image-field";
-import { RgbPicker } from "./rgb-picker";
+import { ColorPicker } from "./color-picker";
 import { maskPhone, SaveButton, SettingsSection, useSave } from "./shared";
 import { useRestaurantId } from "@/components/admin/current-restaurant";
 
@@ -35,9 +35,8 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
     primary_color: restaurant.primary_color,
   };
   const [form, setForm] = useState(initial);
-  const [customColor, setCustomColor] = useState(restaurant.primary_color ?? "");
-  const [rgbOpen, setRgbOpen] = useState(false);
-  const rgbButton = useRef<HTMLButtonElement>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const pickerButton = useRef<HTMLButtonElement>(null);
   const [logo, setLogo] = useState(restaurant.logo_url);
   const [banner, setBanner] = useState(restaurant.banner_url);
   const [checked, setChecked] = useState<{ slug: string; available: boolean } | null>(null);
@@ -110,6 +109,9 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
     event.preventDefault();
     save(() => updateProfileAction(rid, form), "Perfil da loja salvo.");
   }
+
+  // Cor escolhida fora das prontas: a última bolinha passa a mostrá-la.
+  const customColor = form.primary_color && !BRAND_SWATCHES.some((s) => s.value === form.primary_color) ? form.primary_color : null;
 
   const slugHint =
     slugState === "checking" ? (
@@ -212,9 +214,9 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
         <fieldset
           className="flex flex-col gap-3"
           onKeyDown={(e) => {
-            if (e.key !== "Escape" || !rgbOpen) return;
-            setRgbOpen(false);
-            rgbButton.current?.focus();
+            if (e.key !== "Escape" || !pickerOpen) return;
+            setPickerOpen(false);
+            pickerButton.current?.focus();
           }}
         >
           <legend className="mb-2 text-body-sm font-bold text-ink">Cor principal</legend>
@@ -223,10 +225,7 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
             <button
               type="button"
               aria-pressed={form.primary_color === null}
-              onClick={() => {
-                set("primary_color", null);
-                setCustomColor("");
-              }}
+              onClick={() => set("primary_color", null)}
               className={cn(
                 "inline-flex h-9 items-center rounded-md border px-3 text-caption font-bold transition-colors duration-150 ease-out",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
@@ -244,10 +243,7 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
                   aria-pressed={active}
                   aria-label={s.label}
                   title={s.label}
-                  onClick={() => {
-                    set("primary_color", s.value);
-                    setCustomColor(s.value);
-                  }}
+                  onClick={() => set("primary_color", s.value)}
                   className={cn(
                     "inline-flex size-9 items-center justify-center rounded-full border-2 transition-transform duration-150 ease-out active:translate-y-px",
                     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
@@ -259,54 +255,28 @@ export function ProfileForm({ restaurant, menuHost, addressLine }: ProfileFormPr
                 </button>
               );
             })}
-            <div className="flex items-center gap-2">
-              <button
-                ref={rgbButton}
-                type="button"
-                aria-label="Escolher outra cor (RGB)"
-                title="Escolher outra cor (RGB)"
-                aria-expanded={rgbOpen}
-                aria-controls="profile-rgb"
-                onClick={() => setRgbOpen((open) => !open)}
-                className={cn(
-                  "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 mz-stripes-off transition-transform duration-150 ease-out active:translate-y-px",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
-                  rgbOpen ? "border-ink" : "border-surface ring-1 ring-line",
-                )}
-                style={HEX_COLOR.test(customColor) ? { backgroundColor: customColor, backgroundImage: "none" } : undefined}
-              >
-                {/* Fundo próprio: o ícone continua visível em qualquer cor escolhida. */}
-                <span className="inline-flex size-6 items-center justify-center rounded-full bg-surface text-ink">
-                  <Icon icon={Pipette} size={16} />
-                </span>
-              </button>
-              <Input
-                aria-label="Cor personalizada (hexadecimal)"
-                wrapperClassName="w-32"
-                className="uppercase tabular-nums"
-                placeholder="#RRGGBB"
-                maxLength={7}
-                invalid={Boolean(errors.primary_color) || (customColor.length === 7 && !HEX_COLOR.test(customColor)) || undefined}
-                value={customColor}
-                onChange={(e) => {
-                  const v = `#${e.target.value.replace(/[^0-9a-fA-F]/g, "").slice(0, 6)}`.toUpperCase();
-                  const next = v === "#" ? "" : v;
-                  setCustomColor(next);
-                  if (HEX_COLOR.test(next)) set("primary_color", next);
-                }}
-              />
-            </div>
+            <button
+              ref={pickerButton}
+              type="button"
+              aria-label="Mais cores"
+              title="Mais cores"
+              aria-expanded={pickerOpen}
+              aria-controls="profile-color"
+              onClick={() => setPickerOpen((open) => !open)}
+              className={cn(
+                "inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 transition-transform duration-150 ease-out active:translate-y-px",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+                pickerOpen || customColor ? "border-ink" : "border-surface ring-1 ring-line",
+                !customColor && "mz-color-wheel",
+              )}
+              style={customColor ? { backgroundColor: customColor } : undefined}
+            >
+              {/* A sombra mantém o "+" visível em cores claras. */}
+              <Icon icon={Plus} size={20} className="text-white drop-shadow-[0_0_2px_rgb(0_0_0/0.8)]" />
+            </button>
           </div>
-          <div id="profile-rgb" hidden={!rgbOpen}>
-            {rgbOpen && (
-              <RgbPicker
-                value={HEX_COLOR.test(customColor) ? customColor : (form.primary_color ?? "")}
-                onChange={(hex) => {
-                  setCustomColor(hex);
-                  set("primary_color", hex);
-                }}
-              />
-            )}
+          <div id="profile-color" hidden={!pickerOpen}>
+            {pickerOpen && <ColorPicker value={form.primary_color ?? ""} onChange={(hex) => set("primary_color", hex)} />}
           </div>
           {errors.primary_color && (
             <p role="alert" className="text-caption font-semibold text-danger">
