@@ -1,15 +1,17 @@
-import { DM_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+// Fontes guardadas no projeto (ver font-files/README.md): o build não depende do Google Fonts.
+const jakarta = localFont({
+  src: [{ path: "./font-files/plus-jakarta-sans-latin.woff2", weight: "400 800", style: "normal" }],
   variable: "--font-jakarta",
   display: "swap",
 });
 
-const dmMono = DM_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+const dmMono = localFont({
+  src: [
+    { path: "./font-files/dm-mono-400-latin.woff2", weight: "400", style: "normal" },
+    { path: "./font-files/dm-mono-500-latin.woff2", weight: "500", style: "normal" },
+  ],
   variable: "--font-dm-mono",
   display: "swap",
 });
