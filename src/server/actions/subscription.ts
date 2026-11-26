@@ -1,5 +1,6 @@
 "use server";
 
+import { publicAppUrl } from "@/lib/app-origin";
 import { revalidatePath } from "next/cache";
 import { fieldErrors, type FieldErrors } from "@/lib/schemas/auth";
 import { subscribeSchema, type SubscribeInput } from "@/lib/schemas/subscription";
@@ -69,7 +70,7 @@ export async function subscribePlanAction(rid: string, input: SubscribeInput): P
     return { ok: false, error: "A assinatura foi criada, mas não conseguimos registrá-la. Fale com o suporte antes de tentar de novo." };
   }
   // The Menzu account must notify payments too (best effort; the sweeper covers it).
-  await ensureWebhook(client, { appUrl: process.env.APP_URL, token: process.env.ASAAS_WEBHOOK_TOKEN, email: parsed.data.email }).catch(() => null);
+  await ensureWebhook(client, { appUrl: publicAppUrl(), token: process.env.ASAAS_WEBHOOK_TOKEN, email: parsed.data.email }).catch(() => null);
   revalidatePath("/painel/plano");
   return { ok: true, invoiceUrl: await openInvoiceUrl(client, subscriptionId).catch(() => null) };
 }

@@ -11,6 +11,17 @@ export interface AppOriginInput {
   header: (name: string) => string | null;
 }
 
+/**
+ * Endereço público configurado: APP_URL; na Vercel, se ela faltar, o domínio de produção que a própria
+ * plataforma informa (VERCEL_PROJECT_PRODUCTION_URL). Nenhum dos dois vem do pedido do visitante.
+ */
+export function publicAppUrl(env: Record<string, string | undefined> = process.env): string | undefined {
+  const configured = env.APP_URL?.trim();
+  if (configured) return configured;
+  const host = env.VERCEL === "1" ? env.VERCEL_PROJECT_PRODUCTION_URL?.trim() : "";
+  return host ? `https://${host}` : undefined;
+}
+
 export class AppUrlNotConfiguredError extends Error {
   constructor() {
     super("APP_URL is not configured; refusing to derive public links from request headers.");

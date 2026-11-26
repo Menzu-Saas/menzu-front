@@ -1,5 +1,6 @@
 "use server";
 
+import { publicAppUrl } from "@/lib/app-origin";
 import { revalidatePath } from "next/cache";
 import { fieldErrors, type FieldErrors } from "@/lib/schemas/auth";
 import { asaasAccountSchema, type AsaasAccountInput } from "@/lib/schemas/asaas-account";
@@ -16,7 +17,7 @@ export type ActivatePixResult = { ok: true; pixReady: boolean } | { ok: false; e
 
 /** Best effort: without it the sweeper still confirms payments, only later. */
 async function registerWebhook(client: AsaasClient, email: string | undefined, restaurantId: string) {
-  const state = await ensureWebhook(client, { appUrl: process.env.APP_URL, token: process.env.ASAAS_WEBHOOK_TOKEN, email });
+  const state = await ensureWebhook(client, { appUrl: publicAppUrl(), token: process.env.ASAAS_WEBHOOK_TOKEN, email });
   if (state === "FAILED") console.error("[asaas] webhook not configured", { restaurant: restaurantId });
 }
 

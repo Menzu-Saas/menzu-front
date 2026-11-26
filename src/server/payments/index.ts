@@ -1,5 +1,5 @@
 ﻿import "server-only";
-import { resolveAppOrigin } from "@/lib/app-origin";
+import { publicAppUrl, resolveAppOrigin } from "@/lib/app-origin";
 import { AsaasProvider } from "./asaas-provider";
 import { asaasStore, restaurantAsaasClient } from "./asaas-store";
 import { DevelopmentPaymentProvider } from "./development";
@@ -53,7 +53,7 @@ export function getPaymentProvider(env: Env = process.env): PaymentProvider {
       accessToken,
       webhookSecret: value(env, "MERCADOPAGO_WEBHOOK_SECRET"),
       // Same rule as appUrl(): production must configure the public URL (notification_url, back_urls).
-      appUrl: resolveAppOrigin({ configured: value(env, "APP_URL"), nodeEnv: env.NODE_ENV, header: () => null }),
+      appUrl: resolveAppOrigin({ configured: publicAppUrl(env), nodeEnv: env.NODE_ENV, header: () => null }),
       defaultPayerEmail: value(env, "MERCADOPAGO_DEFAULT_PAYER_EMAIL"),
     });
   }

@@ -1,7 +1,7 @@
 import "server-only";
 
 import { headers } from "next/headers";
-import { AppUrlNotConfiguredError, resolveAppOrigin } from "@/lib/app-origin";
+import { AppUrlNotConfiguredError, publicAppUrl, resolveAppOrigin } from "@/lib/app-origin";
 
 /**
  * Public origin for links shared outside the app (auth e-mails, invite links, QR codes).
@@ -11,7 +11,7 @@ export async function appUrl(): Promise<string> {
   const h = await headers();
   try {
     return resolveAppOrigin({
-      configured: process.env.APP_URL,
+      configured: publicAppUrl(),
       nodeEnv: process.env.NODE_ENV,
       header: (name) => h.get(name),
     });
