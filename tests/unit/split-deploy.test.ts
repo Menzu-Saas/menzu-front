@@ -19,7 +19,16 @@ describe("front separado da API", () => {
   });
 
   it("lista as variáveis que faltam no deploy", () => {
-    expect(missingDeployVariables({ MENZU_API_ORIGIN: "https://api.example.com" })).toEqual(["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"]);
+    expect(missingDeployVariables({ MENZU_API_ORIGIN: "https://api.example.com" })).toEqual(["SUPABASE_URL", "SUPABASE_PUBLISHABLE_KEY"]);
+  });
+
+  it("leva ao navegador só o endereço e a chave pública do Supabase, nunca um segredo", async () => {
+    vi.stubEnv("SUPABASE_URL", "https://projeto.supabase.co");
+    vi.stubEnv("SUPABASE_PUBLISHABLE_KEY", "sb_publishable_teste");
+    for (const name of ["SUPABASE_SERVICE_ROLE_KEY", "ASAAS_API_KEY", "MENZU_SESSION_SECRET", "APP_URL"]) vi.stubEnv(name, "nao-pode-vazar");
+    vi.resetModules();
+    const { default: fresh } = await import("../../next.config");
+    expect(fresh.env).toEqual({ MENZU_APP: "restaurant", SUPABASE_URL: "https://projeto.supabase.co", SUPABASE_PUBLISHABLE_KEY: "sb_publishable_teste" });
   });
 
   it("repassa /api/* para a API; sem a variável não repassa nada", async () => {

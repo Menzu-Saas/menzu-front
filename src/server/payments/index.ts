@@ -53,7 +53,7 @@ export function getPaymentProvider(env: Env = process.env): PaymentProvider {
       accessToken,
       webhookSecret: value(env, "MERCADOPAGO_WEBHOOK_SECRET"),
       // Same rule as appUrl(): production must configure the public URL (notification_url, back_urls).
-      appUrl: resolveAppOrigin({ configured: value(env, "NEXT_PUBLIC_APP_URL"), nodeEnv: env.NODE_ENV, header: () => null }),
+      appUrl: resolveAppOrigin({ configured: value(env, "APP_URL"), nodeEnv: env.NODE_ENV, header: () => null }),
       defaultPayerEmail: value(env, "MERCADOPAGO_DEFAULT_PAYER_EMAIL"),
     });
   }

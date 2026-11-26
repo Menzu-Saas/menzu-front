@@ -1,7 +1,7 @@
 /**
  * Public origin for links that leave the app (e-mail links, invite links, QR codes).
  *
- * `NEXT_PUBLIC_APP_URL` is the only trusted source in production: falling back to the request's
+ * `APP_URL` is the only trusted source in production: falling back to the request's
  * Host / X-Forwarded-Host there would let a forged header plant a foreign origin in e-mails and
  * printed QR codes. Outside production the request host is an acceptable convenience.
  */
@@ -13,7 +13,7 @@ export interface AppOriginInput {
 
 export class AppUrlNotConfiguredError extends Error {
   constructor() {
-    super("NEXT_PUBLIC_APP_URL is not configured; refusing to derive public links from request headers.");
+    super("APP_URL is not configured; refusing to derive public links from request headers.");
     this.name = "AppUrlNotConfiguredError";
   }
 }

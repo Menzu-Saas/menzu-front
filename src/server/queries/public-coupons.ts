@@ -17,7 +17,7 @@ const row = z.object({
 
 /** Coupons the restaurant marked as public. Anonymous read through a database function: never the table. */
 export async function getPublicCoupons(slug: string): Promise<PublicCoupon[]> {
-  const client = createClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, {
+  const client = createClient<Database>(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!, {
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
   });
   const { data, error } = await client.rpc("public_coupons", { p_slug: slug });

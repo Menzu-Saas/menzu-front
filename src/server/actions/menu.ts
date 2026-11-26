@@ -258,7 +258,7 @@ export async function setProductAvailabilityAction(rid: string, id: string, isAv
 type Client = Awaited<ReturnType<typeof createSupabaseServerClient>>;
 
 async function removeImages(supabase: Client, restaurantId: string, urls: (string | null)[]) {
-  const base = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const base = process.env.SUPABASE_URL!;
   const paths = urls.map((u) => productImagePath(u, base, restaurantId)).filter((p): p is string => Boolean(p));
   if (paths.length === 0) return;
   // Best-effort: a leftover object is harmless, a failed save is not.
@@ -291,7 +291,7 @@ export async function saveProductAction(rid: string, id: string | null, input: P
   }
 
   // Only accept an unchanged image or one uploaded to this restaurant's product folder.
-  const base = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const base = process.env.SUPABASE_URL!;
   if (
     product.image_url &&
     product.image_url !== previousImage &&

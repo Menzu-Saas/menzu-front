@@ -21,5 +21,5 @@ export function apiOrigin(env: Env = process.env): string | null {
 
 /** Variáveis sem as quais o site publicado quebra. Na Vercel o build falha com a lista do que falta. */
 export function missingDeployVariables(env: Env = process.env): string[] {
-  return ["MENZU_API_ORIGIN", "NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"].filter((name) => !env[name]?.trim());
+  return ["MENZU_API_ORIGIN", "SUPABASE_URL", "SUPABASE_PUBLISHABLE_KEY"].filter((name) => !env[name]?.trim());
 }

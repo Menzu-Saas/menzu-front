@@ -92,7 +92,7 @@ export async function getCurrentMembership(): Promise<Membership | null> {
 export async function requireMember(roles?: readonly MemberRole[]): Promise<MemberContext> {
   const user = await requireUser();
   const membership = await getCurrentMembership();
-  if (!membership) redirect(process.env.NEXT_PUBLIC_MENZU_APP === "restaurant" ? "/sem-restaurante" : "/onboarding");
+  if (!membership) redirect(process.env.MENZU_APP === "restaurant" ? "/sem-restaurante" : "/onboarding");
   if (roles && roles.length > 0 && !roles.includes(membership.role)) {
     redirect(membership.role === "DELIVERY" ? RESTAURANT_ACCESS_PATH : homeForRole(membership.role));
   }
