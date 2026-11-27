@@ -1,4 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { FAQ, STEPS } from "@/components/landing/copy";
 import { describe, expect, it } from "vitest";
 import { LandingPage } from "@/components/landing/landing-page";
 
@@ -42,5 +44,32 @@ describe("landing", () => {
     expect(container.innerHTML).not.toContain("product-captures");
     expect(container.textContent).not.toContain("Buguer House");
     expect(linksTo("#recursos").length).toBeGreaterThan(0);
+  });
+
+  it("como funciona mostra os 3 passos em ordem", () => {
+    setup();
+    const list = within(document.getElementById("como-funciona")!).getByRole("list");
+    expect(within(list).getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(STEPS.map(([title]) => title));
+  });
+
+  it("dúvidas abrem com clique e as perguntas recebem foco pelo teclado", async () => {
+    const user = userEvent.setup();
+    setup();
+    const faq = document.getElementById("duvidas")!;
+    const questions = within(faq).getAllByText((_, el) => el?.tagName === "SUMMARY");
+    expect(questions.map((q) => q.textContent)).toEqual(FAQ.map(([question]) => question));
+    await user.click(questions[0]!);
+    expect(questions[0]!.closest("details")).toHaveAttribute("open");
+    // jsdom não abre <details> com Enter; o Enter é conferido no navegador real (Task 6). Aqui: a pergunta entra no Tab.
+    questions[0]!.focus();
+    await user.tab();
+    expect(document.activeElement).toBe(questions[1]);
+  });
+
+  it("o convite final leva a criar conta e ao cardápio de exemplo", () => {
+    setup();
+    const cta = screen.getByRole("region", { name: /O próximo pedido/ });
+    expect(within(cta).getByRole("link", { name: /Criar meu restaurante/ })).toHaveAttribute("href", "/cadastro");
+    expect(within(cta).getByRole("link", { name: /Ver um cardápio de exemplo/ })).toHaveAttribute("href", "/cardapio/burger-house");
   });
 });
