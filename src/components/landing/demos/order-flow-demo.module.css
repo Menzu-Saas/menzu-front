@@ -13,7 +13,7 @@
   align-items: center;
   gap: 0.8cqi;
   margin-left: auto;
-  color: var(--mz-success);
+  color: color-mix(in oklab, var(--mz-success) 68%, black);
 }
 .live i { width: 1.3cqi; height: 1.3cqi; border-radius: 99px; background: currentColor; box-shadow: 0 0 0 0.7cqi var(--mz-success-soft); }
 
@@ -53,7 +53,7 @@
   border: 1.5px dashed var(--mz-brand-dashed);
   border-radius: 2.4cqi;
   font-size: max(12px, 1.8cqi);
-  color: var(--mz-text-muted);
+  color: var(--mz-text-secondary);
   transition: opacity 300ms ease;
 }
 .emptySlot[data-hidden="true"] { opacity: 0; }
@@ -75,7 +75,7 @@
 }
 .menuHeader div { display: flex; flex-direction: column; gap: 0.4cqi; min-width: 0; }
 .menuHeader strong { font-size: max(12px, 2.6cqi); font-weight: 750; white-space: nowrap; }
-.menuHeader span { font-size: max(12px, 1.7cqi); color: var(--mz-success); white-space: nowrap; }
+.menuHeader span { font-size: max(12px, 1.7cqi); color: color-mix(in oklab, var(--mz-success) 68%, black); white-space: nowrap; }
 .logo {
   display: grid;
   place-items: center;
@@ -86,7 +86,7 @@
   background: var(--mz-brand);
   color: var(--mz-surface) !important;
   font-weight: 800;
-  font-size: max(12px, 2.6cqi) !important;
+  font-size: max(19px, 2.6cqi) !important;
 }
 
 .menu { display: flex; flex-direction: column; padding: 1.4cqi 2.2cqi; }

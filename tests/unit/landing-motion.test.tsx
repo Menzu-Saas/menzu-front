@@ -106,6 +106,13 @@ describe("Reveal", () => {
     expect(screen.getByText("conteúdo").parentElement!.dataset.shown).toBe("true");
   });
 
+  it("ao montar, marca a página como carregada (desliga a revelação de emergência)", () => {
+    delete document.documentElement.dataset.hydrated;
+    installObserver();
+    render(<Reveal><p>conteúdo</p></Reveal>);
+    expect(document.documentElement.dataset.hydrated).toBe("true");
+  });
+
   it("marca o elemento quando ele entra na tela", () => {
     installObserver();
     render(<Reveal delay={2}><p>conteúdo</p></Reveal>);

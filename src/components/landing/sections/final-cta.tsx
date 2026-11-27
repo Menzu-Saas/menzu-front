@@ -12,7 +12,7 @@ export function FinalCta({ signupHref, exampleHref }: { signupHref: string; exam
           <h2 id="comecar-title" className={styles.finalTitle}>O próximo pedido <em>começa aqui.</em></h2>
           <p className={styles.lead}>Monte seu cardápio, convide a equipe e receba o primeiro pedido pelo celular do seu cliente.</p>
           <div className={styles.actions}>
-            <Link href={signupHref} className={`${styles.button} ${styles.buttonBrand}`}>
+            <Link href={signupHref} className={`${styles.button} ${styles.buttonLight}`}>
               Criar meu restaurante <ArrowRight size={18} aria-hidden="true" className={styles.arrow} />
             </Link>
             <Link href={exampleHref} className={`${styles.textLink} ${styles.textLinkInverse}`}>Ver um cardápio de exemplo</Link>

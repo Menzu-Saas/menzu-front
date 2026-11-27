@@ -1,4 +1,4 @@
-.stage { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.stage { --demo-text: color-mix(in oklab, var(--demo-fill) 78%, black); display: flex; flex-direction: column; align-items: center; gap: 22px; }
 
 .card {
   width: min(100%, 340px);
@@ -37,12 +37,12 @@
 .name { font-size: 17px; font-weight: 750; letter-spacing: -0.01em; }
 .tabs { display: flex; gap: 16px; border-bottom: 1px solid var(--mz-border); font-size: 13px; font-weight: 650; color: var(--mz-text-muted); }
 .tabs span { padding-bottom: 8px; border-bottom: 2px solid transparent; transition: color 320ms ease, border-color 320ms ease; }
-.tabs span[data-active="true"] { color: var(--demo-fill); border-color: var(--demo-fill); }
+.tabs span[data-active="true"] { color: var(--demo-text); border-color: var(--demo-fill); }
 .row { display: flex; align-items: center; gap: 12px; }
 .thumb { width: 44px; }
 .rowText { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
 .rowText strong { font-size: 14px; font-weight: 650; }
-.rowText span { font-size: 13px; color: var(--demo-fill); transition: color 320ms ease; }
+.rowText span { font-size: 13px; color: var(--demo-text); transition: color 320ms ease; }
 .add {
   display: grid;
   place-items: center;

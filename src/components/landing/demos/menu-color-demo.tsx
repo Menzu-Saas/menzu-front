@@ -25,7 +25,7 @@ export function MenuColorDemo() {
           <div className={styles.tabs}><span data-active="true">Massas</span><span>Sobremesas</span><span>Bebidas</span></div>
           {DEMO_DISHES.slice(0, 2).map((dish) => (
             <div key={dish.name} className={styles.row}>
-              <span className={cn(base.dish, styles.thumb)} data-tone={dish.tone}>{dish.name.slice(0, 1)}</span>
+              <span className={cn(base.dish, styles.thumb)} data-tone={dish.tone} />
               <span className={styles.rowText}><strong>{dish.name}</strong><span className={base.mono}>{formatPrice(dish.priceCents)}</span></span>
               <span className={styles.add}><Plus size={14} strokeWidth={2.6} /></span>
             </div>

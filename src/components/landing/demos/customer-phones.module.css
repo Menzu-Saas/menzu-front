@@ -75,7 +75,7 @@
 .field > span { display: flex; flex-direction: column; gap: 1px; }
 .field b { font-size: 13px; color: var(--mz-text); }
 .field em { font-style: normal; font-size: 12px; }
-.selected { border-color: var(--mz-brand); background: var(--mz-brand-tint); color: var(--mz-brand); }
+.selected { border-color: var(--mz-brand); background: var(--mz-brand-tint); color: color-mix(in oklab, var(--mz-brand) 72%, black); }
 
 .timeline { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; padding-left: 4px; }
 .timeline li {

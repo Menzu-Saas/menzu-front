@@ -6,10 +6,14 @@
     transform 600ms var(--ease-out) var(--reveal-delay, 0ms);
 }
 
-/* Hidden only when motion is welcome; a failsafe shows it anyway if hydration never happens. */
+/* Hidden only when motion is welcome. */
 :global(html[data-motion="ok"]) .reveal[data-shown="false"] {
   opacity: 0;
   transform: translateY(14px);
+}
+
+/* Emergency: if React never hydrates (script error), show everything after 6 s anyway. */
+:global(html[data-motion="ok"]:not([data-hydrated])) .reveal[data-shown="false"] {
   animation: failsafe 1ms 6s forwards;
 }
 

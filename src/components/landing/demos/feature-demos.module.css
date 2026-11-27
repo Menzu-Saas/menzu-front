@@ -6,7 +6,7 @@
 .list header strong { font-size: 14px; }
 .focusCard { padding: 16px; gap: 10px; }
 .mutedCard { padding: 14px 16px; gap: 6px; opacity: 0.7; }
-.neutral { background: var(--mz-surface-muted); color: var(--mz-text-muted); }
+.neutral { background: var(--mz-surface-muted); color: var(--mz-text-secondary); }
 
 /* Os três rótulos ocupam o mesmo lugar; troca com desfoque leve (crossfade sem "dois objetos"). */
 .statusStack { display: grid; justify-items: end; }

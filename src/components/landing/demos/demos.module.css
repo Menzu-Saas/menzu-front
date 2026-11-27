@@ -95,9 +95,10 @@
   font-size: max(12px, 1.8cqi);
   white-space: nowrap;
 }
-.pillNew { background: var(--mz-brand-soft); color: var(--mz-brand); }
-.pillCooking { background: var(--mz-warning-soft); color: var(--mz-warning); }
-.pillDone { background: var(--mz-success-soft); color: var(--mz-success); }
+/* Texto das etiquetas escurecido no mesmo matiz para passar de 4,5:1 sobre o fundo claro. */
+.pillNew { background: var(--mz-brand-soft); color: color-mix(in oklab, var(--mz-brand) 72%, black); }
+.pillCooking { background: var(--mz-warning-soft); color: color-mix(in oklab, var(--mz-warning) 78%, black); }
+.pillDone { background: var(--mz-success-soft); color: color-mix(in oklab, var(--mz-success) 68%, black); }
 
 .orderCard {
   display: flex;

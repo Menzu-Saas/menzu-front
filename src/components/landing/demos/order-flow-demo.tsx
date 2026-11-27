@@ -67,7 +67,7 @@ export function OrderFlowDemo() {
           <ul className={styles.menu}>
             {DEMO_DISHES.slice(0, 3).map((dish, index) => (
               <li key={dish.name} data-picked={index === 0 && step >= 1}>
-                <span className={cn(base.dish, styles.thumb)} data-tone={dish.tone}>{dish.name.slice(0, 1)}</span>
+                <span className={cn(base.dish, styles.thumb)} data-tone={dish.tone} />
                 <span className={styles.dishText}>
                   <strong>{dish.name}</strong>
                   <span className={base.mono}>{formatPrice(dish.priceCents)}</span>

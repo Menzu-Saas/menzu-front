@@ -75,7 +75,7 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--mz-text-muted);
+  color: var(--mz-text-secondary);
 }
 
 .dot {
@@ -91,7 +91,7 @@
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.04em;
-  color: var(--mz-text-muted);
+  color: var(--mz-text-secondary);
   text-align: right;
 }
 
@@ -115,6 +115,7 @@
 }
 .buttonSmall { min-height: 40px; padding: 0 16px; font-size: 14px; border-radius: var(--mz-radius-lg); }
 .buttonBrand { background: var(--mz-brand); box-shadow: var(--mz-shadow-cta); }
+.buttonLight { background: var(--mz-surface); color: var(--mz-text) !important; box-shadow: 0 10px 30px -12px rgb(255 168 107 / 0.45); }
 .arrow { transition: transform 200ms var(--ease-out); }
 
 .textLink {
@@ -140,6 +141,7 @@
 @media (hover: hover) and (pointer: fine) {
   .button:hover { background: var(--mz-inverse-hover); }
   .buttonBrand:hover { background: var(--mz-brand); filter: brightness(1.06); }
+  .buttonLight:hover { background: var(--mz-brand-soft); }
   .button:hover .arrow { transform: translateX(3px); }
   .textLink:hover { background-size: 100% 1.5px; }
   .nav a:hover,
@@ -407,7 +409,12 @@
 /* ---------- Telas menores ---------- */
 
 @media (max-width: 960px) {
-  .heroGrid { grid-template-columns: 1fr; gap: 48px; }
+  .heroGrid,
+  .featureGrid,
+  .kitchenGrid,
+  .stepsGrid,
+  .faqGrid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .heroGrid { gap: 48px; }
   .heroCopy,
   .heroDemo { grid-column: auto; }
   .nav { display: none; }

@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, ReactNode } from "react";
+import { useEffect, type CSSProperties, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { useInView } from "./use-in-view";
 import styles from "./motion.module.css";
@@ -22,6 +22,8 @@ export interface RevealProps {
  */
 export function Reveal({ as: Tag = "div", delay = 0, className, children }: RevealProps) {
   const [ref, inView] = useInView<HTMLElement>();
+  // React is running: the emergency reveal in motion.module.css is no longer needed.
+  useEffect(() => { document.documentElement.dataset.hydrated = "true"; }, []);
   return (
     <Tag
       ref={ref as never}
