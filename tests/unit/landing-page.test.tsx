@@ -72,4 +72,11 @@ describe("landing", () => {
     expect(within(cta).getByRole("link", { name: /Criar meu restaurante/ })).toHaveAttribute("href", "/cadastro");
     expect(within(cta).getByRole("link", { name: /Ver um cardápio de exemplo/ })).toHaveAttribute("href", "/cardapio/burger-house");
   });
+
+  it("listas só têm itens de lista como filhos diretos", () => {
+    const { container } = setup();
+    for (const list of container.querySelectorAll("ol, ul")) {
+      for (const child of list.children) expect(child.tagName).toBe("LI");
+    }
+  });
 });
