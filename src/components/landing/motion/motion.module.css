@@ -1,0 +1,21 @@
+/* Landing motion (spec §7): strong ease-out for entrances, ease-in-out for on-screen movement. */
+
+.reveal {
+  transition:
+    opacity 600ms var(--ease-out) var(--reveal-delay, 0ms),
+    transform 600ms var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+/* Hidden only when motion is welcome; a failsafe shows it anyway if hydration never happens. */
+:global(html[data-motion="ok"]) .reveal[data-shown="false"] {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: failsafe 1ms 6s forwards;
+}
+
+@keyframes failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
