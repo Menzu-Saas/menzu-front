@@ -7,6 +7,8 @@ import { OrderFlowDemo } from "@/components/landing/demos/order-flow-demo";
 import { OrderStatusDemo } from "@/components/landing/demos/order-status-demo";
 import { CheckoutDemo } from "@/components/landing/demos/checkout-demo";
 import { RouteDemo } from "@/components/landing/demos/route-demo";
+import { KitchenBoardDemo } from "@/components/landing/demos/kitchen-board-demo";
+import { Customer } from "@/components/landing/sections/customer";
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -64,5 +66,26 @@ describe("demonstrações animadas", () => {
       expect(root(container)).toHaveAttribute("aria-hidden", "true");
       unmount();
     }
+  });
+});
+
+describe("cozinha e telas do cliente", () => {
+  it("quadro da cozinha: com movimento reduzido os 3 pedidos estão em Prontos e o próximo chegou", () => {
+    reducedMotion();
+    const { container } = render(<KitchenBoardDemo />);
+    expect(root(container)).toHaveAttribute("aria-hidden", "true");
+    const cards = [...container.querySelectorAll("[data-ticket]")] as HTMLElement[];
+    expect(cards.slice(0, 3).every((card) => card.dataset.column === "prontos")).toBe(true);
+    expect(cards[3]).toHaveAttribute("data-ticket", "#0146");
+    expect(cards[3]).toHaveAttribute("data-column", "preparar");
+    expect(cards[3]).toHaveAttribute("data-visible", "true");
+  });
+
+  it("telas do cliente: 4 celulares com legenda, numa lista com nome", () => {
+    render(<Customer />);
+    const list = screen.getByRole("list", { name: "Telas do cliente" });
+    const items = list.querySelectorAll(":scope > li");
+    expect(items).toHaveLength(4);
+    for (const caption of ["Cardápio", "Sacola", "Checkout", "Acompanhe"]) expect(screen.getByRole("heading", { level: 3, name: caption })).toBeInTheDocument();
   });
 });

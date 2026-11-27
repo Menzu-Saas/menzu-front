@@ -1,0 +1,83 @@
+/* Quadro da cozinha sobre fundo escuro (capítulo inverso). */
+
+.board {
+  --gap: 12px;
+  --ticket-h: 92px;
+  padding: 18px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 24px;
+  background: var(--mz-inverse-hover);
+  box-shadow: 0 50px 80px -50px rgb(0 0 0 / 0.8);
+}
+
+.head,
+.lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.head { margin-bottom: 12px; }
+.columnTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--mz-text-on-inverse);
+}
+.columnTitle b { margin-left: auto; font-weight: 500; color: var(--mz-text-ghost); }
+.columnTitle i { width: 7px; height: 7px; border-radius: 99px; background: var(--mz-chart-5); }
+.columnTitle i[data-column="preparo"] { background: var(--mz-chart-4); }
+.columnTitle i[data-column="prontos"] { background: var(--mz-success); }
+
+.lanes {
+  position: relative;
+  height: calc(var(--ticket-h) * 3 + var(--gap) * 2);
+}
+.lane { border-radius: 16px; background: rgb(255 255 255 / 0.03); }
+
+/* Cada cartão mede uma coluna; anda entre colunas e linhas só com transform. */
+.ticket {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc((100% - var(--gap) * 2) / 3);
+  height: var(--ticket-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid rgb(255 255 255 / 0.09);
+  border-radius: 14px;
+  background: var(--mz-surface-inverse);
+  color: var(--mz-surface);
+  transform: translate(calc(var(--col) * (100% + var(--gap))), calc(var(--row) * (100% + var(--gap))));
+  transition: transform 650ms var(--ease-in-out), opacity 400ms ease, scale 500ms var(--ease-out);
+}
+.ticket[data-visible="false"] { opacity: 0; scale: 0.94; }
+.ticket[data-ticket="#0146"] { border-color: var(--mz-chart-5); box-shadow: 0 0 0 3px rgb(255 168 107 / 0.18); }
+.ticket header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ticket strong { font-size: 14px; font-weight: 500; }
+.ticket p { font-size: 13px; line-height: 1.35; color: var(--mz-text-on-inverse); }
+.timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 99px;
+  font-size: 12px;
+  background: rgb(255 255 255 / 0.08);
+  color: var(--mz-text-on-inverse);
+  transition: background-color 300ms ease, color 300ms ease;
+}
+.timer[data-column="preparo"] { background: var(--mz-warning-soft); color: var(--mz-warning); }
+.timer[data-column="prontos"] { background: var(--mz-success); color: var(--mz-surface); }
+
+@container (max-width: 520px) {
+  .head,
+  .lanes { --gap: 8px; --ticket-h: 104px; }
+  .ticket { padding: 10px; }
+  .ticket p { font-size: 12px; }
+  .columnTitle { font-size: 12px; gap: 6px; }
+  .columnTitle i { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket { transition: none; }
+}

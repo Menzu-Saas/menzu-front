@@ -274,6 +274,43 @@
   background: var(--mz-surface-muted);
 }
 
+/* ---------- Capítulo inverso (cozinha) ---------- */
+
+.inverse {
+  background: var(--mz-surface-inverse);
+  color: var(--mz-surface);
+}
+.inverse .label { color: var(--mz-text-ghost); }
+.inverse .lead { color: var(--mz-text-on-inverse); }
+.inverse .chapterTitle em { color: var(--mz-chart-5); }
+.kitchenGrid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 40px; align-items: center; }
+.kitchenCopy { grid-column: 1 / span 5; display: flex; flex-direction: column; gap: 22px; }
+.kitchenDemo { grid-column: 6 / -1; min-width: 0; }
+.points { display: flex; flex-direction: column; margin-top: 8px; border-top: 1px solid rgb(255 255 255 / 0.1); }
+.points li { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid rgb(255 255 255 / 0.1); }
+.points strong { font-size: 16px; font-weight: 700; }
+.points span { font-size: 15px; line-height: 1.5; color: var(--mz-text-on-inverse); }
+
+/* ---------- Telas do cliente ---------- */
+
+.phoneRail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: clamp(16px, 2.4vw, 32px);
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding: 8px var(--gutter) 16px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+.phoneRail::-webkit-scrollbar { display: none; }
+.phoneItem { display: flex; flex-direction: column; gap: 8px; scroll-snap-align: start; }
+.phoneItem > div:first-child { margin-bottom: 14px; }
+.phoneItem .body { font-size: 15px; }
+
 /* ---------- Rodapé ---------- */
 
 .footer { border-top: 1px solid var(--mz-border); padding: 48px 0 40px; }
@@ -301,6 +338,9 @@
   .featureWide,
   .featureNarrow { grid-column: 1 / -1; }
   .flowList { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .kitchenCopy,
+  .kitchenDemo { grid-column: 1 / -1; }
+  .phoneRail { grid-template-columns: repeat(4, 240px); }
 }
 
 @media (max-width: 560px) {

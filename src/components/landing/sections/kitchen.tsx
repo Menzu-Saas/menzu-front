@@ -1,11 +1,31 @@
-import { SectionHeading } from "./section-heading";
+import { KitchenBoardDemo } from "../demos/kitchen-board-demo";
+import { Reveal } from "../motion/reveal";
 import styles from "../landing.module.css";
 
+const POINTS = [
+  ["Pedidos por etapa", "A preparar, em preparo e prontos, sem papel nem grito."],
+  ["Tempo à vista", "Cada pedido mostra há quanto tempo está na fila."],
+  ["Atualiza sozinho", "Pedido novo aparece na tela da cozinha na hora."],
+];
+
+/** Dark chapter (spec D1): the most striking moment of the page. */
 export function Kitchen() {
   return (
-    <section className={styles.section} aria-labelledby="cozinha-title" id="cozinha">
-      <div className={styles.container}>
-        <SectionHeading id="cozinha-title" label="Cozinha" title="A cozinha no ritmo certo." />
+    <section className={`${styles.section} ${styles.inverse}`} id="cozinha" aria-labelledby="cozinha-title">
+      <div className={`${styles.container} ${styles.kitchenGrid}`}>
+        <Reveal className={styles.kitchenCopy}>
+          <p className={styles.label}>Cozinha</p>
+          <h2 id="cozinha-title" className={styles.chapterTitle}>A cozinha no <em>ritmo do salão.</em></h2>
+          <p className={styles.lead}>O pedido feito no celular do cliente aparece na tela da cozinha. A equipe move cada um até ficar pronto.</p>
+          <ul className={styles.points}>
+            {POINTS.map(([title, text]) => (
+              <li key={title}><strong>{title}</strong><span>{text}</span></li>
+            ))}
+          </ul>
+        </Reveal>
+        <Reveal delay={1} className={styles.kitchenDemo}>
+          <KitchenBoardDemo />
+        </Reveal>
       </div>
     </section>
   );
