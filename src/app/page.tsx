@@ -1,5 +1,11 @@
-import { ProductLanding } from "@/components/landing/product-landing";
+import type { Metadata } from "next";
+import { LandingPage } from "@/components/landing/landing-page";
+
+export const metadata: Metadata = {
+  title: { absolute: "Menzu · Cardápio digital, pedidos e cozinha para restaurantes" },
+  description: "Cardápio digital, pedidos, cozinha e entrega conectados. Seu cliente pede pelo celular, sem aplicativo.",
+};
 
 export default function Home() {
-  return <ProductLanding audience="restaurant" loginHref="/acessar" signupHref="/cadastro" loggedIn={false} exampleHref="/cardapio/burger-house" />;
+  return <LandingPage loginHref="/acessar" signupHref="/cadastro" exampleHref="/cardapio/burger-house" />;
 }

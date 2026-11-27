@@ -1,0 +1,259 @@
+/* Landing do Menzu. Cores, raios e sombras vêm de src/styles/tokens.css (spec §4 e §6). */
+
+.page {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --gutter: clamp(20px, 4vw, 40px);
+  --max: 1240px;
+  --mono: var(--font-dm-mono), ui-monospace, monospace;
+  width: 100%;
+  overflow-x: clip;
+  background: var(--mz-surface-subtle);
+  color: var(--mz-text);
+  font-feature-settings: "ss01", "cv11";
+}
+
+.page a { color: inherit; text-decoration: none; }
+
+.container {
+  width: 100%;
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Tipografia (escala única, spec §6) ---------- */
+
+.display {
+  font-size: clamp(44px, 7.2vw, 88px);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.display em,
+.chapterTitle em {
+  font-style: normal;
+  color: var(--mz-brand);
+}
+
+.chapterTitle {
+  font-size: clamp(32px, 4.6vw, 56px);
+  font-weight: 750;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.blockTitle {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  font-size: clamp(17px, 1.4vw, 18px);
+  line-height: 1.6;
+  color: var(--mz-text-secondary);
+  text-wrap: pretty;
+}
+
+.body {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--mz-text-secondary);
+  text-wrap: pretty;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mz-text-muted);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--mz-brand);
+  box-shadow: 0 0 0 4px var(--mz-brand-soft);
+}
+
+.caption {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--mz-text-muted);
+  text-align: right;
+}
+
+/* ---------- Botões e links (spec §7: toque 140 ms, hover 200 ms só com mouse) ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
+  border-radius: var(--mz-radius-xl);
+  background: var(--mz-surface-inverse);
+  color: var(--mz-surface) !important;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.12) inset, 0 8px 20px -10px rgb(26 22 20 / 0.6);
+  transition: transform 140ms var(--ease-out), background-color 200ms ease;
+}
+.buttonSmall { min-height: 40px; padding: 0 16px; font-size: 14px; border-radius: var(--mz-radius-lg); }
+.buttonBrand { background: var(--mz-brand); box-shadow: var(--mz-shadow-cta); }
+.arrow { transition: transform 200ms var(--ease-out); }
+
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--mz-text);
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px;
+  background-position: 0 calc(100% - 10px);
+  background-repeat: no-repeat;
+  transition: background-size 220ms var(--ease-out), transform 140ms var(--ease-out);
+}
+
+.button:active,
+.textLink:active,
+.press:active { transform: scale(0.97); }
+.press { display: inline-flex; transition: transform 140ms var(--ease-out); }
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { background: var(--mz-inverse-hover); }
+  .buttonBrand:hover { background: var(--mz-brand); filter: brightness(1.06); }
+  .button:hover .arrow { transform: translateX(3px); }
+  .textLink:hover { background-size: 100% 1.5px; }
+  .nav a:hover,
+  .footerNav a:hover { color: var(--mz-text); }
+}
+
+.page a:focus-visible,
+.page button:focus-visible,
+.page summary:focus-visible {
+  outline: 2px solid var(--mz-brand);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* ---------- Cabeçalho ---------- */
+
+.sentinel { position: absolute; top: 12px; height: 1px; width: 1px; }
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid transparent;
+  transition: background-color 240ms ease, border-color 240ms ease, backdrop-filter 240ms ease;
+}
+.header[data-scrolled="true"] {
+  background: rgb(252 250 249 / 0.82);
+  border-bottom-color: var(--mz-border);
+  backdrop-filter: saturate(1.4) blur(14px);
+}
+.headerInner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  height: 68px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.nav {
+  display: flex;
+  gap: 28px;
+  margin-inline: auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mz-text-secondary);
+}
+.nav a { transition: color 200ms ease; }
+.account { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+.account .textLink { font-size: 14px; }
+
+/* ---------- Hero ---------- */
+
+.hero { padding: clamp(40px, 7vw, 96px) 0 clamp(56px, 8vw, 120px); }
+.heroGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 32px;
+  align-items: center;
+}
+.heroCopy { grid-column: 1 / span 6; display: flex; flex-direction: column; gap: 28px; }
+.heroCopy .lead { max-width: 30rem; }
+.heroDemo { grid-column: 7 / -1; min-width: 0; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
+
+/* ---------- Seções ---------- */
+
+.section { padding: clamp(72px, 10vw, 140px) 0; scroll-margin-top: 68px; }
+.sectionHeading { margin-bottom: clamp(36px, 5vw, 64px); }
+.sectionHeadingInner { display: flex; flex-direction: column; gap: 20px; max-width: 46rem; }
+.sectionHeadingInner[data-align="center"] { margin-inline: auto; text-align: center; align-items: center; }
+.sectionHeadingInner .lead { max-width: 36rem; }
+
+/* ---------- Rodapé ---------- */
+
+.footer { border-top: 1px solid var(--mz-border); padding: 48px 0 40px; }
+.footerInner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px 48px;
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.footerBrand { display: flex; flex-direction: column; gap: 12px; }
+.footerBrand p { font-size: 14px; color: var(--mz-text-secondary); }
+.footerNav { display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 14px; font-weight: 600; color: var(--mz-text-secondary); }
+.footerNav a { display: inline-flex; min-height: 32px; align-items: center; transition: color 200ms ease; }
+.footerInner > small { grid-column: 1 / -1; padding-top: 24px; border-top: 1px solid var(--mz-border); }
+
+/* ---------- Telas menores ---------- */
+
+@media (max-width: 960px) {
+  .heroGrid { grid-template-columns: 1fr; gap: 48px; }
+  .heroCopy,
+  .heroDemo { grid-column: auto; }
+  .nav { display: none; }
+}
+
+@media (max-width: 560px) {
+  .headerInner { height: 60px; gap: 12px; }
+  .account { gap: 12px; }
+  .actions { flex-direction: column; align-items: stretch; }
+  .actions .button { width: 100%; }
+  .actions .textLink { justify-content: center; }
+  .footerInner { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .textLink,
+  .press,
+  .arrow { transition: background-color 200ms ease, background-size 200ms ease; }
+  .button:active,
+  .textLink:active,
+  .press:active { transform: none; }
+}
