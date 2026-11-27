@@ -1,0 +1,114 @@
+/*
+ * Demonstrações ilustrativas do produto. Medidas em `cqi` (largura do palco), então cada demo
+ * escala junto com o espaço que tem. Movimento só com transform/opacity/stroke (spec §7).
+ */
+
+.stage {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --mono: var(--font-dm-mono), ui-monospace, monospace;
+  --demo-accent: var(--mz-brand);
+  user-select: none;
+}
+
+/* ---------- Aparelhos ---------- */
+
+.phone {
+  position: relative;
+  border-radius: 7.5cqi;
+  padding: 1.6cqi;
+  background: var(--mz-surface-inverse);
+  box-shadow: 0 2px 0 rgb(255 255 255 / 0.08) inset, 0 40px 60px -36px rgb(70 45 20 / 0.55), 0 12px 24px -16px rgb(70 45 20 / 0.35);
+}
+.screen {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 6cqi;
+  background: var(--mz-surface);
+}
+.notch {
+  position: absolute;
+  z-index: 2;
+  top: 1.6cqi;
+  left: 50%;
+  width: 26%;
+  height: 4.2cqi;
+  border-radius: 99px;
+  background: var(--mz-surface-inverse);
+  transform: translateX(-50%);
+}
+
+.window {
+  overflow: hidden;
+  border: 1px solid var(--mz-border);
+  border-radius: 3.4cqi;
+  background: var(--mz-surface);
+  box-shadow: 0 40px 70px -44px rgb(70 45 20 / 0.45), 0 2px 6px -2px rgb(70 45 20 / 0.12);
+}
+.windowBar {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqi;
+  padding: 2cqi 2.6cqi;
+  border-bottom: 1px solid var(--mz-border);
+  font-family: var(--mono);
+  font-size: max(12px, 1.9cqi);
+  color: var(--mz-text-muted);
+}
+.windowDots { display: flex; gap: 0.9cqi; }
+.windowDots i { width: 1.4cqi; height: 1.4cqi; border-radius: 99px; background: var(--mz-border-strong); }
+
+/* ---------- Peças comuns ---------- */
+
+.mono { font-family: var(--mono); letter-spacing: 0.02em; }
+
+.dish {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 22%;
+  font-size: 0 !important;
+  background:
+    radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.55) 0 18%, transparent 19%),
+    radial-gradient(circle at 62% 64%, var(--tone-dot) 0 22%, transparent 23%),
+    var(--tone);
+  box-shadow: inset 0 0 0 1px rgb(26 22 20 / 0.06);
+}
+/* Prato sem foto: um "prato" de cor (Q1 da spec). */
+.dish[data-tone="a"] { --tone: var(--mz-chart-3); --tone-dot: var(--mz-danger); }
+.dish[data-tone="b"] { --tone: var(--mz-warning-soft); --tone-dot: var(--mz-chart-5); }
+.dish[data-tone="c"] { --tone: var(--mz-stripe-cover-a); --tone-dot: var(--mz-stripe-cover-ink); }
+.dish[data-tone="d"] { --tone: var(--mz-stripe-food-b); --tone-dot: var(--mz-warning); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: 0.35em 0.75em;
+  border-radius: 99px;
+  font-family: var(--mono);
+  font-size: max(12px, 1.8cqi);
+  white-space: nowrap;
+}
+.pillNew { background: var(--mz-brand-soft); color: var(--mz-brand); }
+.pillCooking { background: var(--mz-warning-soft); color: var(--mz-warning); }
+.pillDone { background: var(--mz-success-soft); color: var(--mz-success); }
+
+.orderCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2cqi;
+  padding: 2.2cqi;
+  border: 1px solid var(--mz-border);
+  border-radius: 2.4cqi;
+  background: var(--mz-surface);
+  box-shadow: 0 6px 14px -10px rgb(70 45 20 / 0.3);
+}
+.orderCard header { display: flex; justify-content: space-between; align-items: baseline; gap: 1cqi; }
+.orderCard strong { font-size: max(12px, 2.3cqi); font-weight: 750; }
+.orderCard p { font-size: max(12px, 2cqi); color: var(--mz-text-secondary); }

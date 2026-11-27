@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { ReactNode } from "react";
+import { OrderFlowDemo } from "../demos/order-flow-demo";
 import { Reveal } from "../motion/reveal";
 import styles from "../landing.module.css";
 
-export function Hero({ signupHref, exampleHref, demo }: { signupHref: string; exampleHref: string; demo?: ReactNode }) {
+export function Hero({ signupHref, exampleHref }: { signupHref: string; exampleHref: string }) {
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
       <div className={`${styles.container} ${styles.heroGrid}`}>
@@ -25,7 +25,7 @@ export function Hero({ signupHref, exampleHref, demo }: { signupHref: string; ex
         </div>
         <Reveal delay={2} className={styles.heroDemo}>
           <figure>
-            {demo}
+            <OrderFlowDemo />
             <figcaption className={styles.caption}>Telas ilustrativas</figcaption>
           </figure>
         </Reveal>

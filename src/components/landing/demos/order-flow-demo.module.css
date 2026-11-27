@@ -1,0 +1,147 @@
+.stage { aspect-ratio: 1 / 0.86; }
+
+/* Painel atrás, à direita */
+.window {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 78cqi;
+  height: 64cqi;
+}
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8cqi;
+  margin-left: auto;
+  color: var(--mz-success);
+}
+.live i { width: 1.3cqi; height: 1.3cqi; border-radius: 99px; background: currentColor; box-shadow: 0 0 0 0.7cqi var(--mz-success-soft); }
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2cqi;
+  height: 100%;
+  padding: 2.6cqi 2.6cqi 2.6cqi 21cqi;
+  background: var(--mz-surface-muted);
+}
+.board section { display: flex; flex-direction: column; gap: 1.6cqi; min-width: 0; }
+.board h4 {
+  display: flex;
+  justify-content: space-between;
+  font-size: max(12px, 2cqi);
+  font-weight: 700;
+  color: var(--mz-text-secondary);
+}
+
+.arriving {
+  transform: translateY(-2.4cqi) scale(0.97);
+  opacity: 0;
+  transition: transform 700ms var(--ease-out), opacity 400ms ease, box-shadow 900ms ease;
+}
+.arriving[data-arrived="true"] {
+  transform: none;
+  opacity: 1;
+  box-shadow: 0 0 0 0.5cqi var(--mz-brand-soft), 0 10px 20px -12px rgb(226 84 10 / 0.45); /* mz-allow-hardcoded: sombra na cor da marca */
+}
+.slot { display: grid; }
+.slot > * { grid-area: 1 / 1; }
+.emptySlot {
+  display: grid;
+  place-items: center;
+  min-height: 12cqi;
+  border: 1.5px dashed var(--mz-brand-dashed);
+  border-radius: 2.4cqi;
+  font-size: max(12px, 1.8cqi);
+  color: var(--mz-text-muted);
+  transition: opacity 300ms ease;
+}
+.emptySlot[data-hidden="true"] { opacity: 0; }
+
+/* Celular na frente, à esquerda */
+.phone {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40cqi;
+  height: 80cqi;
+}
+.menuHeader {
+  display: flex;
+  align-items: center;
+  gap: 2cqi;
+  padding: 8cqi 3cqi 2.6cqi;
+  border-bottom: 1px solid var(--mz-border);
+}
+.menuHeader div { display: flex; flex-direction: column; gap: 0.4cqi; min-width: 0; }
+.menuHeader strong { font-size: max(12px, 2.6cqi); font-weight: 750; white-space: nowrap; }
+.menuHeader span { font-size: max(12px, 1.7cqi); color: var(--mz-success); white-space: nowrap; }
+.logo {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 6.4cqi;
+  height: 6.4cqi;
+  border-radius: 1.8cqi;
+  background: var(--mz-brand);
+  color: var(--mz-surface) !important;
+  font-weight: 800;
+  font-size: max(12px, 2.6cqi) !important;
+}
+
+.menu { display: flex; flex-direction: column; padding: 1.4cqi 2.2cqi; }
+.menu li {
+  display: flex;
+  align-items: center;
+  gap: 2cqi;
+  padding: 1.6cqi 0.8cqi;
+  border-radius: 2cqi;
+  transition: background-color 300ms ease;
+}
+.menu li + li { border-top: 1px solid var(--mz-border); }
+.menu li[data-picked="true"] { background: var(--mz-brand-tint); }
+.thumb { width: 8cqi; }
+.dishText { display: flex; flex-direction: column; gap: 0.4cqi; min-width: 0; flex: 1; }
+.dishText strong { font-size: max(12px, 2.1cqi); font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dishText span { font-size: max(12px, 1.8cqi); color: var(--mz-text-secondary); }
+.add {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 5.6cqi;
+  height: 5.6cqi;
+  border-radius: 1.6cqi;
+  border: 1px solid var(--mz-border-strong);
+  color: var(--mz-text);
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.add[data-pressed="true"] { transform: scale(0.86); }
+.add[data-added="true"],
+.add[data-pressed="true"] { background: var(--mz-brand); border-color: var(--mz-brand); color: var(--mz-surface); }
+
+.bag {
+  position: absolute;
+  left: 2.4cqi;
+  right: 2.4cqi;
+  bottom: 2.4cqi;
+  display: flex;
+  align-items: center;
+  gap: 1.6cqi;
+  padding: 2.4cqi 2.8cqi;
+  border-radius: 2.6cqi;
+  background: var(--mz-surface-inverse);
+  color: var(--mz-surface);
+  font-size: max(12px, 2cqi);
+  font-weight: 700;
+  transform: translateY(140%);
+  transition: transform 520ms var(--ease-out);
+}
+.bag span:last-child { margin-left: auto; font-weight: 500; }
+.bag[data-shown="true"] { transform: none; }
+
+@container (max-width: 520px) {
+  .window { width: 82cqi; height: 64cqi; }
+  .board { grid-template-columns: 1fr; padding-left: 34cqi; }
+  .board section:last-child { display: none; }
+  .phone { width: 50cqi; height: 86cqi; }
+}

@@ -1,0 +1,126 @@
+/* Demonstrações dos recursos (status, checkout e entrega). Medidas fixas: o palco já é pequeno. */
+
+/* ---------- Status de pedidos ---------- */
+.list { display: flex; flex-direction: column; gap: 10px; }
+.list :global(p) { font-size: 13px; }
+.list header strong { font-size: 14px; }
+.focusCard { padding: 16px; gap: 10px; }
+.mutedCard { padding: 14px 16px; gap: 6px; opacity: 0.7; }
+.neutral { background: var(--mz-surface-muted); color: var(--mz-text-muted); }
+
+/* Os três rótulos ocupam o mesmo lugar; troca com desfoque leve (crossfade sem "dois objetos"). */
+.statusStack { display: grid; justify-items: end; }
+.status {
+  grid-area: 1 / 1;
+  opacity: 0;
+  filter: blur(3px);
+  transform: translateY(4px);
+  transition: opacity 260ms ease, filter 260ms ease, transform 320ms var(--ease-out);
+}
+.status[data-current="true"] { opacity: 1; filter: none; transform: none; }
+
+.progress { display: flex; gap: 6px; }
+.progress i {
+  height: 4px;
+  flex: 1;
+  border-radius: 99px;
+  background: var(--mz-border);
+  background-image: linear-gradient(var(--mz-brand), var(--mz-brand));
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 600ms var(--ease-in-out);
+}
+.progress i[data-on="true"] { background-size: 100% 100%; }
+
+/* ---------- Checkout ---------- */
+.checkout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--mz-border);
+  border-radius: 22px;
+  background: var(--mz-surface);
+  box-shadow: 0 24px 40px -30px rgb(70 45 20 / 0.45);
+}
+.checkoutTitle { font-size: 16px; font-weight: 750; }
+.methods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.method {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border: 1.5px solid var(--mz-border);
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--mz-text-secondary);
+  transition: border-color 220ms ease, background-color 220ms ease, color 220ms ease;
+}
+.method[data-selected="true"] { border-color: var(--mz-brand); background: var(--mz-brand-tint); color: var(--mz-brand); }
+.totalRow { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; color: var(--mz-text-secondary); }
+.totalRow strong { font-size: 18px; color: var(--mz-text); }
+.confirm {
+  display: grid;
+  place-items: center;
+  min-height: 46px;
+  border-radius: 14px;
+  background: var(--mz-surface-inverse);
+  color: var(--mz-surface);
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform 140ms var(--ease-out), background-color 300ms ease;
+}
+.confirm > span { grid-area: 1 / 1; display: inline-flex; align-items: center; gap: 8px; transition: opacity 240ms ease, filter 240ms ease; }
+.confirmDone { opacity: 0; filter: blur(3px); }
+.confirm[data-pressed="true"] { transform: scale(0.97); }
+.confirm[data-done="true"] { background: var(--mz-success); }
+.confirm[data-done="true"] .confirmIdle { opacity: 0; filter: blur(3px); }
+.confirm[data-done="true"] .confirmDone { opacity: 1; filter: none; }
+
+/* ---------- Entrega ---------- */
+.route {
+  overflow: hidden;
+  border: 1px solid var(--mz-border);
+  border-radius: 22px;
+  background: var(--mz-surface-sunken);
+}
+.map { display: block; width: 100%; height: auto; }
+.streets { fill: none; stroke: var(--mz-border); stroke-width: 10; }
+.routeBase { fill: none; stroke: var(--mz-border-strong); stroke-width: 3; stroke-dasharray: 2 7; stroke-linecap: round; }
+.routeLine {
+  fill: none;
+  stroke: var(--mz-brand);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1200ms var(--ease-in-out);
+}
+.routeLine[data-drawn="true"] { stroke-dashoffset: 0; }
+.pin circle { fill: var(--mz-surface); stroke: var(--mz-border-strong); stroke-width: 1.5; transition: fill 300ms ease, stroke 300ms ease; }
+.pin svg { color: var(--mz-text-secondary); transition: color 300ms ease; }
+.pin[data-done="true"] circle { fill: var(--mz-success); stroke: var(--mz-success); }
+.pin[data-done="true"] svg { color: var(--mz-surface); }
+.courier { opacity: 0; transition: opacity 200ms ease; }
+.courier[data-riding="true"] { opacity: 1; }
+.courier circle { fill: var(--mz-brand); }
+.courier svg { color: var(--mz-surface); }
+.routeStatus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--mz-border);
+  background: var(--mz-surface);
+  font-size: 13px;
+  color: var(--mz-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status,
+  .confirm > span { transition: opacity 200ms ease; filter: none; transform: none; }
+  .routeLine { transition: none; }
+}
