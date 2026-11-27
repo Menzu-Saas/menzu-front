@@ -32,7 +32,7 @@ describe("aplicativo exclusivo do restaurante", () => {
     }
     // The home is the restaurant landing page, which links to sign in and sign up.
     const home = readFileSync(path.join(app, "page.tsx"), "utf8");
-    expect(home).toContain("ProductLanding");
+    expect(home).toContain("LandingPage");
     expect(home).toContain('loginHref="/acessar"');
     const files = readdirSync("src", { recursive: true, withFileTypes: true }).filter((entry) => entry.isFile());
     for (const entry of files) {

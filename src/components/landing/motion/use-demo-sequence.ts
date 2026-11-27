@@ -4,6 +4,11 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 
 const REDUCE = "(prefers-reduced-motion: reduce)";
 
+function subscribeVisibility(onChange: () => void) {
+  document.addEventListener("visibilitychange", onChange);
+  return () => document.removeEventListener("visibilitychange", onChange);
+}
+
 function subscribe(onChange: () => void) {
   if (typeof window === "undefined" || !window.matchMedia) return () => {};
   const query = window.matchMedia(REDUCE);
@@ -30,14 +35,7 @@ export function useStaticMotion(): boolean {
 export function useDemoSequence(length: number, active: boolean, stepMs = 900): number {
   const still = useStaticMotion();
   const [step, setStep] = useState(0);
-  const [visible, setVisible] = useState(() => typeof document === "undefined" || document.visibilityState !== "hidden");
-
-  useEffect(() => {
-    const update = () => setVisible(document.visibilityState !== "hidden");
-    update();
-    document.addEventListener("visibilitychange", update);
-    return () => document.removeEventListener("visibilitychange", update);
-  }, []);
+  const visible = useSyncExternalStore(subscribeVisibility, () => document.visibilityState !== "hidden", () => true);
 
   const done = step >= length - 1;
   useEffect(() => {

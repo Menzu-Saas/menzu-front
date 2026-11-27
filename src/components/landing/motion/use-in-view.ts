@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from "react";
+
+const noSubscription = () => () => {};
 
 /**
  * True once the element has entered the viewport (then it stops observing). Without
@@ -9,15 +11,12 @@ import { useEffect, useRef, useState, type RefObject } from "react";
 export function useInView<T extends Element>(options: { rootMargin?: string; threshold?: number } = {}): [RefObject<T | null>, boolean] {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
+  const unsupported = useSyncExternalStore(noSubscription, () => typeof IntersectionObserver === "undefined", () => false);
   const { rootMargin = "0px 0px -12% 0px", threshold = 0 } = options;
 
   useEffect(() => {
     const element = ref.current;
-    if (typeof IntersectionObserver === "undefined") {
-      setInView(true);
-      return;
-    }
-    if (!element) return;
+    if (!element || typeof IntersectionObserver === "undefined") return;
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
         setInView(true);
@@ -28,5 +27,5 @@ export function useInView<T extends Element>(options: { rootMargin?: string; thr
     return () => observer.disconnect();
   }, [rootMargin, threshold]);
 
-  return [ref, inView];
+  return [ref, inView || unsupported];
 }
