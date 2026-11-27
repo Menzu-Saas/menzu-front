@@ -1,13 +1,13 @@
-/* Quadro da cozinha sobre fundo escuro (capítulo inverso). */
+/* Quadro da cozinha (tela do painel), sobre a faixa quente do capítulo. */
 
 .board {
   --gap: 12px;
   --ticket-h: 92px;
   padding: 18px;
-  border: 1px solid rgb(255 255 255 / 0.08);
+  border: 1px solid var(--mz-border);
   border-radius: 24px;
-  background: var(--mz-inverse-hover);
-  box-shadow: 0 50px 80px -50px rgb(0 0 0 / 0.8);
+  background: var(--mz-surface);
+  box-shadow: 0 50px 80px -50px rgb(70 45 20 / 0.45), 0 2px 6px -2px rgb(70 45 20 / 0.1);
 }
 
 .head,
@@ -19,9 +19,9 @@
   gap: 8px;
   font-size: 13px;
   font-weight: 650;
-  color: var(--mz-text-on-inverse);
+  color: var(--mz-text-secondary);
 }
-.columnTitle b { margin-left: auto; font-weight: 500; color: var(--mz-text-ghost); }
+.columnTitle b { margin-left: auto; font-weight: 500; color: var(--mz-text-secondary); }
 .columnTitle i { width: 7px; height: 7px; border-radius: 99px; background: var(--mz-chart-5); }
 .columnTitle i[data-column="preparo"] { background: var(--mz-chart-4); }
 .columnTitle i[data-column="prontos"] { background: var(--mz-success); }
@@ -30,7 +30,7 @@
   position: relative;
   height: calc(var(--ticket-h) * 3 + var(--gap) * 2);
 }
-.lane { border-radius: 16px; background: rgb(255 255 255 / 0.03); }
+.lane { border-radius: 16px; background: var(--mz-surface-muted); }
 
 /* Cada cartão mede uma coluna; anda entre colunas e linhas só com transform. */
 .ticket {
@@ -43,18 +43,19 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 12px 14px;
-  border: 1px solid rgb(255 255 255 / 0.09);
+  border: 1px solid var(--mz-border);
   border-radius: 14px;
-  background: var(--mz-surface-inverse);
-  color: var(--mz-surface);
+  background: var(--mz-surface);
+  color: var(--mz-text);
+  box-shadow: 0 8px 16px -12px rgb(70 45 20 / 0.35);
   transform: translate(calc(var(--col) * (100% + var(--gap))), calc(var(--row) * (100% + var(--gap))));
   transition: transform 650ms var(--ease-in-out), opacity 400ms ease, scale 500ms var(--ease-out);
 }
 .ticket[data-visible="false"] { opacity: 0; scale: 0.94; }
-.ticket[data-ticket="#0146"] { border-color: var(--mz-chart-5); box-shadow: 0 0 0 3px rgb(255 168 107 / 0.18); }
+.ticket[data-ticket="#0146"] { border-color: var(--mz-brand-tint-border); box-shadow: 0 0 0 3px var(--mz-brand-soft), 0 8px 16px -12px rgb(70 45 20 / 0.35); }
 .ticket header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .ticket strong { font-size: 14px; font-weight: 500; }
-.ticket p { font-size: 13px; line-height: 1.35; color: var(--mz-text-on-inverse); }
+.ticket p { font-size: 13px; line-height: 1.35; color: var(--mz-text-secondary); }
 .timer {
   display: inline-flex;
   align-items: center;
@@ -62,12 +63,12 @@
   padding: 3px 8px;
   border-radius: 99px;
   font-size: 12px;
-  background: rgb(255 255 255 / 0.08);
-  color: var(--mz-text-on-inverse);
+  background: var(--mz-surface-muted);
+  color: var(--mz-text-secondary);
   transition: background-color 300ms ease, color 300ms ease;
 }
 .timer[data-column="preparo"] { background: var(--mz-warning-soft); color: color-mix(in oklab, var(--mz-warning) 78%, black); }
-.timer[data-column="prontos"] { background: var(--mz-success); color: var(--mz-surface); }
+.timer[data-column="prontos"] { background: var(--mz-success-soft); color: color-mix(in oklab, var(--mz-success) 68%, black); }
 
 @container (max-width: 520px) {
   .head,

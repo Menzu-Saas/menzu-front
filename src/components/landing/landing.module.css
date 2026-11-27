@@ -115,7 +115,6 @@
 }
 .buttonSmall { min-height: 40px; padding: 0 16px; font-size: 14px; border-radius: var(--mz-radius-lg); }
 .buttonBrand { background: var(--mz-brand); box-shadow: var(--mz-shadow-cta); }
-.buttonLight { background: var(--mz-surface); color: var(--mz-text) !important; box-shadow: 0 10px 30px -12px rgb(255 168 107 / 0.45); }
 .arrow { transition: transform 200ms var(--ease-out); }
 
 .textLink {
@@ -141,7 +140,6 @@
 @media (hover: hover) and (pointer: fine) {
   .button:hover { background: var(--mz-inverse-hover); }
   .buttonBrand:hover { background: var(--mz-brand); filter: brightness(1.06); }
-  .buttonLight:hover { background: var(--mz-brand-soft); }
   .button:hover .arrow { transform: translateX(3px); }
   .textLink:hover { background-size: 100% 1.5px; }
   .nav a:hover,
@@ -276,22 +274,21 @@
   background: var(--mz-surface-muted);
 }
 
-/* ---------- Capítulo inverso (cozinha) ---------- */
+/* ---------- Capítulo da cozinha: faixa quente, para dar ritmo sem escurecer ---------- */
 
-.inverse {
-  background: var(--mz-surface-inverse);
-  color: var(--mz-surface);
+.band {
+  background:
+    radial-gradient(70% 60% at 85% 20%, rgb(255 255 255 / 0.55), transparent 70%),
+    var(--mz-canvas);
+  border-block: 1px solid var(--mz-border);
 }
-.inverse .label { color: var(--mz-text-ghost); }
-.inverse .lead { color: var(--mz-text-on-inverse); }
-.inverse .chapterTitle em { color: var(--mz-chart-5); }
 .kitchenGrid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 40px; align-items: center; }
 .kitchenCopy { grid-column: 1 / span 5; display: flex; flex-direction: column; gap: 22px; }
 .kitchenDemo { grid-column: 6 / -1; min-width: 0; }
-.points { display: flex; flex-direction: column; margin-top: 8px; border-top: 1px solid rgb(255 255 255 / 0.1); }
-.points li { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid rgb(255 255 255 / 0.1); }
+.points { display: flex; flex-direction: column; margin-top: 8px; border-top: 1px solid var(--mz-border-strong); }
+.points li { display: flex; flex-direction: column; gap: 4px; padding: 16px 0; border-bottom: 1px solid var(--mz-border-strong); }
 .points strong { font-size: 16px; font-weight: 700; }
-.points span { font-size: 15px; line-height: 1.5; color: var(--mz-text-on-inverse); }
+.points span { font-size: 15px; line-height: 1.5; color: var(--mz-text-secondary); }
 
 /* ---------- Telas do cliente ---------- */
 
@@ -364,30 +361,26 @@
 
 /* ---------- Convite final ---------- */
 
-.finalSection { padding: 0 0 clamp(64px, 8vw, 112px); }
-.finalCta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
-  padding: clamp(56px, 8vw, 112px) clamp(24px, 5vw, 64px);
-  border-radius: 36px;
-  text-align: center;
-  background:
-    radial-gradient(120% 90% at 50% 0%, rgb(255 168 107 / 0.16), transparent 60%),
-    var(--mz-surface-inverse);
+.finalSection { padding: clamp(80px, 11vw, 160px) 0 clamp(56px, 7vw, 96px); }
+.finalGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 32px 40px;
+  align-items: end;
+  padding-top: clamp(40px, 5vw, 64px);
+  border-top: 1px solid var(--mz-border);
 }
-.finalCta .lead { max-width: 34rem; }
-.finalCta .actions { justify-content: center; }
+.finalTitleWrap { grid-column: 1 / span 8; }
 .finalTitle {
-  font-size: clamp(40px, 6vw, 76px);
+  font-size: clamp(48px, 8.4vw, 120px);
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.045em;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
   text-wrap: balance;
 }
-.finalTitle em { font-style: normal; color: var(--mz-chart-5); }
-.textLinkInverse { color: var(--mz-surface) !important; }
+.finalTitle em { font-style: normal; color: var(--mz-brand); }
+.finalAside { grid-column: 9 / -1; display: flex; flex-direction: column; align-items: flex-start; gap: 24px; padding-bottom: 10px; }
+.finalAside .actions { flex-direction: column; align-items: flex-start; gap: 8px; }
 
 /* ---------- Rodapé ---------- */
 
@@ -413,7 +406,10 @@
   .featureGrid,
   .kitchenGrid,
   .stepsGrid,
-  .faqGrid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .faqGrid,
+  .finalGrid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .finalTitleWrap,
+  .finalAside { grid-column: 1 / -1; }
   .heroGrid { gap: 48px; }
   .heroCopy,
   .heroDemo { grid-column: auto; }

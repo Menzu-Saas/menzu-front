@@ -8,10 +8,10 @@ const POINTS = [
   ["Atualiza sozinho", "Pedido novo aparece na tela da cozinha na hora."],
 ];
 
-/** Dark chapter (spec D1): the most striking moment of the page. */
+/** Kitchen chapter on a warm band (light, per the owner's feedback). */
 export function Kitchen() {
   return (
-    <section className={`${styles.section} ${styles.inverse}`} id="cozinha" aria-labelledby="cozinha-title">
+    <section className={`${styles.section} ${styles.band}`} id="cozinha" aria-labelledby="cozinha-title">
       <div className={`${styles.container} ${styles.kitchenGrid}`}>
         <Reveal className={styles.kitchenCopy}>
           <p className={styles.label}>Cozinha</p>
